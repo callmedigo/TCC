@@ -19,26 +19,26 @@ Previsão:
 **Lista Mestre**
 | Colunas         | Descrição                         |
 |-----------------|:---------------------------------:|
-| Mercado         | Nome extraido do titulo do arquivo|
-| Código          | Nome da tarefa no cronograma      |
-| Data Abertura   | Lista de setores atribuídos       |
-| Data Conclusão  | Progresso atual da tarefa         |
-| Projeto         | Data formatas                     |
-| Marca           | Nome extraido do titulo do arquivo|
-| Responsavel     | Nome da tarefa no cronograma      |
-| Tipo do Projeto | Lista de setores atribuídos       |
-| Cronograma      | Progresso atual da tarefa         |
-| Status          | Data formatas                     |
-| Prazo           | Data formatas                     |
-| Atividades      | Nome extraido do titulo do arquivo|
-| Anotações       | Nome da tarefa no cronograma      |
-| Ano             | Lista de setores atribuídos       |
-| Atrasado        | Progresso atual da tarefa         |
-| Motivo Atraso   | Data formatas                     |
-| Lançamento      | Nome da tarefa no cronograma      |
-| Duração Prevista| Lista de setores atribuídos       |
-| Cron. Conclusão | Progresso atual da tarefa         |
-| Duração Real    | Data formatas                     |
+| Mercado         | Mercado do projeto (ME/MI/B2B)    |
+| Código          | Código de identificação do projeto|
+| Data Abertura   | Data de abertura (Briefing)       |
+| Data Conclusão  | Data de conclusão (Briefing)      |
+| Projeto         | Nome do projeto                   |
+| Marca           | Qual marca da empresa ele atende  |
+| Responsavel     | Responsavel do projeto            |
+| Tipo do Projeto | Classificação do projeto          |
+| Cronograma      | Caso exista ou não e o Link       |
+| Status          | Status atual de fases             |
+| Prazo           | Prazo atividade atual             |
+| Atividades      | Atividade atual                   |
+| Anotações       | Anotações importantes             |
+| Ano             | Ano de abertura do projeto        |
+| Atrasado        | Se está atrasado (Sim/Não)        |
+| Motivo Atraso   | Motivos do atraso                 |
+| Lançamento      | Data de Lançamento                |
+| Duração Prevista| Duração (Inicio/Fim Briefing)     |
+| Cron. Conclusão | Conclusão que está no cronograma  |
+| Duração Real    | Duração (Inicio/Fim Cronograma)   |
 
 **• Organização das pastas  
 • Cronogramas .xml**  
@@ -48,6 +48,7 @@ Previsão:
 2. **Definição dos Requisitos Funcionais**  
 • Ser capaz de percorrer as diversas pastas que separam os projetos.  
 • Identificar quais tiveram modificações desde a ultima vez que rodou.  
+• Identificar automaticamente status do projeto de acordo com qual pasta ele se encontra.  
 • Extrair o conteudo de dentro dos .xml's.  
 • Comparar com a ultima versão para analisar o que teve de alteração.  
 • Gerar um arquivo com essas alterações tratadas. (CSV/JSON)  
