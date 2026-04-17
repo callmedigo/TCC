@@ -98,3 +98,14 @@ Previsão:
 • **[Documentação]** Formatação ABNT (referências, sumário, figuras).  
 • **[Documentação]** Revisão ortográfica e lógica do texto.  
 • **[Documentação]** Preparação dos slides para a banca.  
+
+
+
+Comandos:
+python3 geracao_sintetica.py Teste1.xml --count 5 --variation-days 5
+
+Parâmetros
+--count: quantidade de arquivos gerados
+--variation-days: variação máxima em dias antes de GATE 2
+--output-dir: pasta de saída (padrão Dados)
+--seed: semente para resultados reprodutíveis
