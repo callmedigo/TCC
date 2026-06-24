@@ -1,18 +1,6 @@
 # TCC
 ETL para Gestão de Projetos com automação e integração entre diversas ferramentas (ProjectLibre, PowerBI, gerenciamento de pastas) 
-
-# Cronograma e Mapeamento de atividades 
-
-Previsão:
-| Etapa   | Data  |
-|---------|:-----:|
-| Etapa 1 | 12/04 |
-| Etapa 2 | 19/04 |
-| Etapa 3 | 26/04 |
-| Etapa 4 | 03/05 |
-| Etapa 5 | 10/05 |
-
-### Etapa 1 - Definições
+### Definições
 
 1. **Mapeamento dos dados atualmente**
 
@@ -49,21 +37,19 @@ Previsão:
 • Ser capaz de percorrer as diversas pastas que separam os projetos.  
 • Identificar quais tiveram modificações desde a ultima vez que rodou.  
 • Identificar automaticamente status do projeto de acordo com qual pasta ele se encontra.  
-• Extrair o conteudo de dentro dos .xml's.  
+• Extrair o conteudo de dentro dos .xml's/.pod's.  
 • Comparar com a ultima versão para analisar o que teve de alteração.  
-• Gerar um arquivo com essas alterações tratadas. (CSV/JSON)  
-• Armazenar em um Banco de dados.  
-• Exibir as informações do Banco em um PowerBI dinamico.
+• Gerar um arquivo com essas alterações tratadas. (CSV)  
+• Exibir as informações do Banco em um BI dinamico.
 
 3. **Configuração do ambiente**  
 • Python  
 • Pandas  
-• Json  
-• Postgree  
+• CSV
 • os  
 • xml.etree.ElementTree  
 
-### Etapa 2 - Códigos e Documentação
+### Códigos e Documentação
 1. **Script de Extração**  
 • **[Código]** Desenvolver a função que monitora a pasta de arquivos de projeto.  
 • **[Código]** Desenvolver geração de dados sinteticos para testes  
@@ -78,14 +64,14 @@ Previsão:
 • **[Documentação]** Levantamento do Referencial Teórico (Agile, Governança de Dados, Python no BI).  
 • **[Documentação]**  Descrição da Metodologia e arquitetura do sistema (Diagrama de Fluxo de Dados).  
 
-### Etapa 3 - Desenvolvimento do Front-end
+### Desenvolvimento da ferramenta de Business Intelligence
 1. **Mockup básico do Dashboard**  
 • **[Código]** Pull de informações do Banco de dados.  
 • **[Código]** Implementação dos filtros dinâmicos (por projeto, por status, por data).  
 • **[Código]** Integração dos gráficos (Plotly ou Altair) com o motor Python.  
 • **[Documentação]** Capturas de tela e descrição das funcionalidades da interface.  
 
-### Etapa 4 - Testes e Validação de Resultados  
+### Testes e Validação de Resultados  
 • **[Documentação]** Explicar como foi desenvolver os dados sinteticos e como eles se encaixam na realidade.  
 • **[Documentação]** Testes de estresse (carregar +30 arquivos).  
 • **[Documentação]** Comparativo de Tempo: quanto tempo levava o processo manual vs. o automatizado?  
@@ -93,13 +79,11 @@ Previsão:
 • **[Análise]** Coleta de feedbacks (pode ser uma simulação de "validação com stakeholders").  
 • **[Documentação]** Escrita do capítulo de "Resultados e Discussão".  
 
-### Etapa 5 - Finalização e Revisão
+### Finalização e Revisão
 • **[Documentação]** Escrita da Conclusão (limitações do projeto e melhorias futuras como por exemplo a escalabilidade e integração com ferramentas como  o TOTVS Fluig).  
 • **[Documentação]** Formatação ABNT (referências, sumário, figuras).  
 • **[Documentação]** Revisão ortográfica e lógica do texto.  
 • **[Documentação]** Preparação dos slides para a banca.  
-
-
 
 Comandos:
 python3 geracao_sintetica.py Teste1.xml --count 5 --variation-days 5
