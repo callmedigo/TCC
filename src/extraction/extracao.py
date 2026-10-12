@@ -6,9 +6,12 @@ from pathlib import Path
 import logging
 import re
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-CAMINHO_ENTRADA = REPO_ROOT / "Inputs" #/ "ProjectLibre"
-PASTA_SAIDA = REPO_ROOT / "Outputs" / "ProjectLibre"
+REPO_ROOT = Path(__file__).resolve().parents[2]
+CAMINHOS_ENTRADA = (
+    REPO_ROOT / "data" / "raw",
+    REPO_ROOT / "data" / "synthetic",
+)
+PASTA_SAIDA = REPO_ROOT / "data" / "processed"
 LOG_DIR = REPO_ROOT / "logs"
 
 os.makedirs(PASTA_SAIDA, exist_ok=True)
@@ -274,25 +277,24 @@ def parse_mspdi_from_pod(pod_path):
 def processar_xmls_recursivos(diretorio_raiz):
     arquivo_infos = []
     tarefas_consolidadas = []
+    nome_origem = Path(diretorio_raiz).name
     
     for root, dirs, files in os.walk(diretorio_raiz):
-        if os.path.abspath(root) == os.path.abspath(diretorio_raiz):
-            dirs[:] = [d for d in dirs if d in ["Em Estudo", "Em Execução"]]
-        
         pasta_relativa = os.path.relpath(root, diretorio_raiz)
         if pasta_relativa == ".":
-            pasta_relativa = "Root"
+            pasta_relativa = nome_origem
+        else:
+            pasta_relativa = os.path.join(nome_origem, pasta_relativa)
         
         for arquivo in files:
-            if arquivo.endswith('.xml') or arquivo.endswith('.pod'):
+            if Path(arquivo).suffix.lower() in {'.xml', '.pod'}:
                 caminho_completo = os.path.join(root, arquivo)
                 status_leitura = "Não lido"
 
                 try:
-                    if arquivo.endswith('.xml'):
+                    if Path(arquivo).suffix.lower() == '.xml':
                         tarefas = parse_mspdi_to_list(caminho_completo)
                     else:
-                        # .pod -> extrai XML a partir da linha 642 em diante
                         tarefas = parse_mspdi_from_pod(caminho_completo)
 
                     status_leitura = "Lido com sucesso"
@@ -319,27 +321,37 @@ def processar_xmls_recursivos(diretorio_raiz):
     
     return arquivo_infos, tarefas_consolidadas
 
-def gerar_relatorios(diretorio_raiz, diretorio_saida):    
-    logger.info(f"Iniciando processamento recursivo de XML em: {diretorio_raiz}")
-    
-    if not os.path.exists(diretorio_raiz):
-        logger.error(f"Pasta '{diretorio_raiz}' não encontrada.")
-        print(f"A pasta '{diretorio_raiz}' não foi encontrada.")
-        return
-    
-    print(f"Iniciando processamento recursivo de XML em: {diretorio_raiz}")
-    
-    arquivo_infos, tarefas_consolidadas = processar_xmls_recursivos(diretorio_raiz)
+def gerar_relatorios(diretorios_raiz=CAMINHOS_ENTRADA, diretorio_saida=PASTA_SAIDA):
+    if isinstance(diretorios_raiz, (str, os.PathLike)):
+        diretorios_raiz = (Path(diretorios_raiz),)
+    else:
+        diretorios_raiz = tuple(Path(path) for path in diretorios_raiz)
+
+    for diretorio_raiz in diretorios_raiz:
+        if not diretorio_raiz.is_dir():
+            raise FileNotFoundError(f"Pasta de entrada não encontrada: {diretorio_raiz}")
+
+    diretorio_saida = Path(diretorio_saida)
+    diretorio_saida.mkdir(parents=True, exist_ok=True)
+    logger.info(f"Iniciando processamento de arquivos em: {diretorios_raiz}")
+    print(f"Iniciando processamento de arquivos em: {diretorios_raiz}")
+
+    arquivo_infos = []
+    tarefas_consolidadas = []
+    for diretorio_raiz in diretorios_raiz:
+        arquivos_origem, tarefas_origem = processar_xmls_recursivos(diretorio_raiz)
+        arquivo_infos.extend(arquivos_origem)
+        tarefas_consolidadas.extend(tarefas_origem)
     if arquivo_infos:
         try:
-            caminho_arquivo_detalhes = os.path.join(diretorio_saida, "arquivos_xml.csv")
+            caminho_arquivo_detalhes = diretorio_saida / "arquivos_xml.csv"
             with open(caminho_arquivo_detalhes, 'w', encoding='utf-8-sig', newline='') as f:
                 escritor = csv.DictWriter(f, fieldnames=['Nome do Arquivo', 'Pasta', 'Status de Leitura', 'Caminho Completo'])
                 escritor.writeheader()
                 escritor.writerows(arquivo_infos)
             
             logger.info(f"CSV de detalhes gerado: {caminho_arquivo_detalhes} ({len(arquivo_infos)} arquivos)")
-            print(f"\n✓ CSV de detalhes gerado: {caminho_arquivo_detalhes} ({len(arquivo_infos)} arquivos)")
+            print(f"\nCSV de detalhes gerado: {caminho_arquivo_detalhes} ({len(arquivo_infos)} arquivos)")
             for info in arquivo_infos:
                 print(f"  {info['Nome do Arquivo']} - {info['Status de Leitura']}")
         except Exception as e:
@@ -352,7 +364,7 @@ def gerar_relatorios(diretorio_raiz, diretorio_saida):
     if tarefas_consolidadas:
         fieldnames = ['Projeto', 'Atividade', 'Recursos', 'Percentual completo', 'Inicio', 'Termino', 'Duracao (dias)', 'Duracao Baseline (dias)', 'UID', 'OutlineNumber', 'Pasta', 'Arquivo']    
         try:
-            caminho_consolidado = os.path.join(diretorio_saida, "consolidado_projetos.csv")
+            caminho_consolidado = diretorio_saida / "consolidado_projetos.csv"
             with open(caminho_consolidado, 'w', encoding='utf-8-sig', newline='') as f:
                 escritor = csv.DictWriter(f, fieldnames=fieldnames)
                 escritor.writeheader()
@@ -366,7 +378,7 @@ def gerar_relatorios(diretorio_raiz, diretorio_saida):
                     escritor.writerow(tarefa_fmt)
             
             logger.info(f"CSV consolidado gerado: {caminho_consolidado} ({len(tarefas_consolidadas)} tarefas)")
-            print(f"\n✓ CSV consolidado gerado: {caminho_consolidado} ({len(tarefas_consolidadas)} tarefas)")
+            print(f"\nCSV consolidado gerado: {caminho_consolidado} ({len(tarefas_consolidadas)} tarefas)")
             print(f"Colunas: {fieldnames}")
         except Exception as e:
             logger.error(f"Erro ao gerar 'consolidado_projetos.csv': {str(e)}")
@@ -379,7 +391,7 @@ if __name__ == "__main__":
     try:
         logger.info("=" * 60)
         logger.info("Iniciando execucao do script de extração de XML")
-        gerar_relatorios(CAMINHO_ENTRADA, PASTA_SAIDA)
+        gerar_relatorios(CAMINHOS_ENTRADA, PASTA_SAIDA)
         logger.info("Execucao concluida com sucesso")
         logger.info("=" * 60)
     except Exception as e:

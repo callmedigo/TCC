@@ -85,11 +85,44 @@ ETL para Gestão de Projetos com automação e integração entre diversas ferra
 • **[Documentação]** Revisão ortográfica e lógica do texto.  
 • **[Documentação]** Preparação dos slides para a banca.  
 
-Comandos:
-python3 geracao_sintetica.py Teste1.xml --count 5 --variation-days 5
+Comando (usa `data/raw/Cronograma Completo XML.xml` como modelo e grava os arquivos em `data/synthetic`):
+python src/generator/synthetic_generator.py
+
+Cada lote com pelo menos três cronogramas inclui projetos no início, no meio e no fim do progresso. O corte é escolhido dentro de faixas diferentes para cada estágio, sem reutilizar uma atividade de corte no mesmo lote: início (15–30% das tarefas), meio (40–65%) e fim (75–95%). As tarefas antes do corte ficam em 100%, uma tarefa fica parcialmente concluída e todas as tarefas depois ficam em 0%; assim, projetos no início não recebem progresso artificial nas atividades finais. As atividades-resumo refletem o progresso ponderado das tarefas descendentes.
+
+Os XMLs gerados mantêm apenas os metadados essenciais do projeto e os campos das tarefas usados pela extração e pelo ProjectLibre. A hierarquia, dependências, calendários, recursos, linhas de base, percentuais e datas `Start`/`Finish` do modelo são preservados; datas já calculadas ficam disponíveis para a extração e para exibição no ProjectLibre. Dados redundantes de distribuição temporal dos recursos são omitidos, mas as alocações, unidades, trabalho e datas dos recursos permanecem. Os códigos gerados começam com duas letras aleatórias (por exemplo, `AB-001-26`).
+
+Para escolher outro modelo ou ajustar os padrões:
+python src/generator/synthetic_generator.py caminho/para/modelo.xml --count 5
 
 Parâmetros
 --count: quantidade de arquivos gerados
---variation-days: variação máxima em dias antes de GATE 2
---output-dir: pasta de saída (padrão Dados)
+--output-dir: pasta de saída (padrão data/synthetic)
 --seed: semente para resultados reprodutíveis
+
+### Extração e BSC
+
+Execute o fluxo de extração para ler os cronogramas de `data/raw` e `data/synthetic` e gerar os CSVs em `data/processed`:
+
+```bash
+python src/main.py
+```
+
+Com o consolidado gerado, calcule os indicadores previsto e realizado:
+
+```bash
+python src/bsc/bsc_previsto.py calculate
+python src/bsc/bsc_realizado.py calculate
+```
+
+Os dois BSC usam `data/processed/consolidado_projetos.csv` como entrada e salvam seus resultados em `data/processed`. O BSC realizado usa os percentuais dos cronogramas; pode-se informar uma planilha opcional com `--input-excel`.
+
+### Dashboard Streamlit
+
+Com os CSVs atualizados em `data/processed`, execute o dashboard a partir da raiz do repositório:
+
+```powershell
+python -m streamlit run src\dashboard\app.py
+```
+
+O menu lateral contém quatro telas: visão geral dos projetos, cronograma filtrável por projeto, atividades em aberto agrupadas por mês (incluindo itens atrasados) e comparação mensal/acumulada dos indicadores BSC planejados e realizados.
