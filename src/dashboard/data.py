@@ -42,7 +42,7 @@ def _prepare_projects(projects: pd.DataFrame) -> pd.DataFrame:
     prepared = projects.copy()
     prepared["Projeto"] = prepared["Projeto"].astype("string").str.strip()
     prepared["Atividade"] = prepared["Atividade"].astype("string").str.strip()
-    prepared["Recursos"] = prepared["Recursos"].astype("string").fillna("Sem recurso")
+    prepared["Recursos"] = prepared["Recursos"].astype("string").fillna("-")
     prepared["Inicio"] = pd.to_datetime(prepared["Inicio"], errors="coerce")
     prepared["Termino"] = pd.to_datetime(prepared["Termino"], errors="coerce")
     prepared["_percentual"] = _normalize_numeric(prepared["Percentual completo"]).clip(0, 100).fillna(0)

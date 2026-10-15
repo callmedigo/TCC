@@ -81,7 +81,7 @@ def parse_dt(text, uid, tag):
     return datetime.fromisoformat(text)
 
 def back_to_weekday(moment):
-    while moment.weekday() >= 5:  # sábado/domingo
+    while moment.weekday() >= 5:
         moment -= timedelta(days=1)
     return moment
 
@@ -117,8 +117,8 @@ def load_schedule(root):
             'finish': parse_dt(task.findtext('p:Finish', namespaces=NS), uid, 'Finish'),
             'duration': duration_to_seconds(task.findtext('p:Duration', namespaces=NS), uid),
             'links': links,
-            'leaves': [],      # (só resumos) folhas descendentes
-            'ancestors': [],   # (só folhas) resumos ancestrais
+            'leaves': [],
+            'ancestors': [],
         }
         order.append(uid)
 
@@ -217,11 +217,11 @@ def enforce_dependencies(item, percentage, links, info, final):
         started = any(final[u] > 0 for u in pred_leaves)
 
         if link_type == FS and not done:
-            percentage = 0                      # só começa após 100% da predecessora
+            percentage = 0
         elif link_type == SS and not started:
-            percentage = 0                      # só começa depois que a predecessora começou
+            percentage = 0
         elif link_type == FF and not done:
-            percentage = min(percentage, 99)    # não pode terminar antes da predecessora
+            percentage = min(percentage, 99)
         elif link_type == SF and not started:
             percentage = min(percentage, 99)
 

@@ -57,16 +57,14 @@ def parse_data_iso(data_str):
 def parse_duration_to_days(duration_str):
     if not duration_str or not isinstance(duration_str, str):
         return None
-    # Match PT#H#M#S format (hours, minutes, seconds)
     match = re.match(r'PT(\d+)H(\d+)M(\d+)S', duration_str)
     if match:
         hours = int(match.group(1))
         minutes = int(match.group(2))
         seconds = int(match.group(3))
         total_hours = hours + minutes / 60 + seconds / 3600
-        days = total_hours / 8  # assuming 8 hours per day
+        days = total_hours / 8
         return round(days, 2)
-    # Match P#DT#H#M#S format (days, hours, minutes, seconds)
     match_d = re.match(r'P(\d+)DT(\d+)H(\d+)M(\d+)S', duration_str)
     if match_d:
         days = int(match_d.group(1))
@@ -117,7 +115,6 @@ def _parse_mspdi_root(root, project_label):
 
     tasks = []
 
-    # Find and process the project summary task (first task)
     summary_task = root.find('.//p:Task', ns)
     if summary_task:
         name = get_xml_tag_text(summary_task, 'Name', ns)
@@ -135,7 +132,6 @@ def _parse_mspdi_root(root, project_label):
 
         duracao_dias = parse_duration_to_days(duracao)
         baseline_duracao_dias = parse_duration_to_days(baseline_duracao)
-
         name_sanitizado = sanitizar_texto(name)
 
         if name_sanitizado and start:
@@ -164,7 +160,6 @@ def _parse_mspdi_root(root, project_label):
                     'Duracao Baseline (dias)': baseline_duracao_dias
                 })
 
-    # Now process regular tasks, skipping the first
     all_tasks = root.findall('.//p:Task', ns)
     for task in all_tasks[1:]:
         is_summary = get_xml_tag_text(task, 'Summary', ns)
@@ -175,7 +170,6 @@ def _parse_mspdi_root(root, project_label):
         task_uid = get_xml_tag_text(task, 'UID', ns)
         duracao = get_xml_tag_text(task, 'Duration', ns)
         outline_number = get_xml_tag_text(task, 'OutlineNumber', ns)
-
         baseline_element = task.find('p:Baseline', ns)
         baseline_duracao = None
         if baseline_element is not None:
@@ -225,7 +219,6 @@ def _parse_mspdi_root(root, project_label):
 
     return tasks
 
-
 def extract_xml_from_pod(pod_path):
     """Extrai o bloco de texto XML dentro de um arquivo .pod.
     Procura pela tag <Project xmlns="http://schemas.microsoft.com/project">
@@ -236,18 +229,15 @@ def extract_xml_from_pod(pod_path):
     with open(pod_path, 'rb') as f:
         raw = f.read()
 
-    # Define os marcadores diretamente em bytes (com o b antes da string)
     marker = b'<Project xmlns="http://schemas.microsoft.com/project">'
     pos = raw.find(marker)
     
     if pos >= 0:
-        # Encontrou a tag! Corta os bytes e decodifica direto em UTF-8
         xml_bytes = raw[pos:]
         xml_text = xml_bytes.decode('utf-8', errors='replace')
         logger.info(f"Tag Project encontrada em posição {pos} (Tratado em UTF-8)")
         return xml_text
     else:
-        # Fallback se o xmlns for diferente: procura por b'<Project'
         pos = raw.find(b'<Project')
         if pos >= 0:
             logger.warning(f"Tag Project com xmlns diferente encontrada em posição {pos}")
@@ -256,7 +246,6 @@ def extract_xml_from_pod(pod_path):
             return xml_text
         
         raise ValueError('Arquivo .pod não contém a tag <Project esperada.')
-
 
 def parse_mspdi_from_pod(pod_path):
     """Extrai XML de .pod e retorna lista de tarefas como parse_mspdi_to_list."""

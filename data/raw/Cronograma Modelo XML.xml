@@ -3,7 +3,7 @@
     <SaveVersion>14</SaveVersion>
     <Name>Titulo do Projeto</Name>
     <Title>Titulo do Projeto</Title>
-    <Manager></Manager>
+    <Manager>Dono do Projeto</Manager>
     <ScheduleFromStart>1</ScheduleFromStart>
     <StartDate>2026-02-02T09:00:00</StartDate>
     <FinishDate>2026-07-10T18:00:00</FinishDate>
@@ -43,7 +43,7 @@
     <MoveCompletedEndsForward>0</MoveCompletedEndsForward>
     <BaselineForEarnedValue>0</BaselineForEarnedValue>
     <AutoAddNewResourcesAndTasks>1</AutoAddNewResourcesAndTasks>
-    <CurrentDate>2026-10-12T13:46:00</CurrentDate>
+    <CurrentDate>2026-10-14T23:03:00</CurrentDate>
     <MicrosoftProjectServerURL>1</MicrosoftProjectServerURL>
     <Autolink>1</Autolink>
     <NewTaskStartDate>0</NewTaskStartDate>
@@ -1222,7 +1222,7 @@
             <Name>Titulo do Projeto</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS></WBS>
             <OutlineNumber>1</OutlineNumber>
             <OutlineLevel>1</OutlineLevel>
@@ -1267,7 +1267,7 @@
             <Name>GATE 1 - APROVAÇÃO DA IDEIA</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>2</WBS>
             <OutlineNumber>1.1</OutlineNumber>
             <OutlineLevel>2</OutlineLevel>
@@ -1319,7 +1319,7 @@
             <Name>FASE 2 - ESTUDO</Name>
             <Type>1</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>3</WBS>
             <OutlineNumber>1.2</OutlineNumber>
             <OutlineLevel>2</OutlineLevel>
@@ -1377,7 +1377,7 @@
             <Name>GATE 2 - APROVAÇÃO DO ESTUDO</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>4</WBS>
             <OutlineNumber>1.3</OutlineNumber>
             <OutlineLevel>2</OutlineLevel>
@@ -1434,7 +1434,7 @@
             <Name>FASE 3 - EXECUÇÃO</Name>
             <Type>1</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5</WBS>
             <OutlineNumber>1.4</OutlineNumber>
             <OutlineLevel>2</OutlineLevel>
@@ -1487,7 +1487,7 @@
             <Name>Reunião de Kick-off da execução</Name>
             <Type>1</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.1</WBS>
             <OutlineNumber>1.4.1</OutlineNumber>
             <OutlineLevel>3</OutlineLevel>
@@ -1540,7 +1540,7 @@
             <Name>Apresentar projeto, papéis e responsabilidades</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.2.1</WBS>
             <OutlineNumber>1.4.1.1</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -1598,7 +1598,7 @@
             <Name>Cadastro</Name>
             <Type>1</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.2</WBS>
             <OutlineNumber>1.4.2</OutlineNumber>
             <OutlineLevel>3</OutlineLevel>
@@ -1651,7 +1651,7 @@
             <Name>Cadastro de MP e ME</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.2.2</WBS>
             <OutlineNumber>1.4.2.1</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -1709,7 +1709,7 @@
             <Name>Cadastrar PI e PE</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.2.3</WBS>
             <OutlineNumber>1.4.2.2</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -1767,7 +1767,7 @@
             <Name>Gerar código de PA/ descrição/ Código de Barra da Unidade de Venda (EAN)/ Código de Barra da Caixa Master (DUN) </Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.2.4</WBS>
             <OutlineNumber>1.4.2.3</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -1825,7 +1825,7 @@
             <Name>Cadastrar PA no sistema (Dados FTR e Ficha Técnica de Embalagem (FCE))</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.2.5</WBS>
             <OutlineNumber>1.4.2.4</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -1883,7 +1883,7 @@
             <Name>Cadastrar as contas contábeis, as informações de impostos nas filiais e grupo de comissão</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.2.6</WBS>
             <OutlineNumber>1.4.2.5</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -1941,7 +1941,7 @@
             <Name>Documentação do produto</Name>
             <Type>1</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.3</WBS>
             <OutlineNumber>1.4.3</OutlineNumber>
             <OutlineLevel>3</OutlineLevel>
@@ -1994,7 +1994,7 @@
             <Name>DAD/ FCE</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.3.1</WBS>
             <OutlineNumber>1.4.3.1</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2052,7 +2052,7 @@
             <Name>CMO/ CEE</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.3.2</WBS>
             <OutlineNumber>1.4.3.2</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2110,7 +2110,7 @@
             <Name>FTR final</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.3.3</WBS>
             <OutlineNumber>1.4.3.3</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2168,7 +2168,7 @@
             <Name>Especificações (ETE/ ETM/ ETP)</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.3.4</WBS>
             <OutlineNumber>1.4.3.4</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2226,7 +2226,7 @@
             <Name>Lançamento da receita do produto no sistema</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.3.5</WBS>
             <OutlineNumber>1.4.3.5</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2284,7 +2284,7 @@
             <Name>Checagem do cadastro na receita do produto no sistema</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.3.6</WBS>
             <OutlineNumber>1.4.3.6</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2342,7 +2342,7 @@
             <Name>Desenvolvimento de Embalagens</Name>
             <Type>1</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.4</WBS>
             <OutlineNumber>1.4.4</OutlineNumber>
             <OutlineLevel>3</OutlineLevel>
@@ -2395,7 +2395,7 @@
             <Name>Desenvolvimento de Layout da Embalagem</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.4.1</WBS>
             <OutlineNumber>1.4.4.1</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2453,7 +2453,7 @@
             <Name>Aprovação layout</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.4.2</WBS>
             <OutlineNumber>1.4.4.2</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2511,7 +2511,7 @@
             <Name>Planificação da arte com texto</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.4.3</WBS>
             <OutlineNumber>1.4.4.3</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2574,7 +2574,7 @@
             <Name>Arte Final</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.4.4</WBS>
             <OutlineNumber>1.4.4.4</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2632,7 +2632,7 @@
             <Name>Envio da arte para fornecedor filme/ display e caixa</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.4.6</WBS>
             <OutlineNumber>1.4.4.5</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2690,7 +2690,7 @@
             <Name>Solicitações e Entregas</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS></WBS>
             <OutlineNumber>1.4.5</OutlineNumber>
             <OutlineLevel>3</OutlineLevel>
@@ -2735,7 +2735,7 @@
             <Name>Solicitações de Compras - MP e ME</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.7</WBS>
             <OutlineNumber>1.4.5.1</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2793,7 +2793,7 @@
             <Name>Processo de Compra (Cotação)</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.12</WBS>
             <OutlineNumber>1.4.5.2</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2851,7 +2851,7 @@
             <Name>Processo de Compra - Pedido MP e ME</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.6</WBS>
             <OutlineNumber>1.4.5.3</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2909,7 +2909,7 @@
             <Name>Entrega de matéria prima</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.8</WBS>
             <OutlineNumber>1.4.5.4</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -2967,7 +2967,7 @@
             <Name>Entrega de filme/filme individual</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.9</WBS>
             <OutlineNumber>1.4.5.5</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -3025,7 +3025,7 @@
             <Name>Entrega de display/caixa</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.10</WBS>
             <OutlineNumber>1.4.5.6</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -3083,7 +3083,7 @@
             <Name>Cadastrar Preço Tabela de Vendas</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.15</WBS>
             <OutlineNumber>1.4.6</OutlineNumber>
             <OutlineLevel>3</OutlineLevel>
@@ -3151,7 +3151,7 @@
             <Name>Comunicado do Lançamento / Liberação de Vendas</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.16</WBS>
             <OutlineNumber>1.4.7</OutlineNumber>
             <OutlineLevel>3</OutlineLevel>
@@ -3219,7 +3219,7 @@
             <Name>Produção do Produto</Name>
             <Type>1</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.17</WBS>
             <OutlineNumber>1.4.8</OutlineNumber>
             <OutlineLevel>3</OutlineLevel>
@@ -3272,7 +3272,7 @@
             <Name>Comunicado de início de fabricação ANVISA</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.5</WBS>
             <OutlineNumber>1.4.8.1</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -3330,7 +3330,7 @@
             <Name>Treinamento Equipe para Produção Piloto</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.17.1</WBS>
             <OutlineNumber>1.4.8.2</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -3403,7 +3403,7 @@
             <Name>Acompanhamento da Produção</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.17.2</WBS>
             <OutlineNumber>1.4.8.3</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -3461,7 +3461,7 @@
             <Name>Gerar Relatório de Produção</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.17.3</WBS>
             <OutlineNumber>1.4.8.4</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -3519,7 +3519,7 @@
             <Name>Conferência Cadastro x Relatório</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.17.4</WBS>
             <OutlineNumber>1.4.8.5</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -3577,7 +3577,7 @@
             <Name>Revisão cadastro do produto</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.17.5</WBS>
             <OutlineNumber>1.4.8.6</OutlineNumber>
             <OutlineLevel>4</OutlineLevel>
@@ -3635,7 +3635,7 @@
             <Name>Liberação de Faturamento</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>5.18</WBS>
             <OutlineNumber>1.4.9</OutlineNumber>
             <OutlineLevel>3</OutlineLevel>
@@ -3693,7 +3693,7 @@
             <Name>GATE 3 - APROVAÇÃO DO PROJETO</Name>
             <Type>0</Type>
             <IsNull>0</IsNull>
-            <CreateDate>2026-10-12T13:45:00</CreateDate>
+            <CreateDate>2026-10-14T23:02:00</CreateDate>
             <WBS>6</WBS>
             <OutlineNumber>1.5</OutlineNumber>
             <OutlineLevel>2</OutlineLevel>

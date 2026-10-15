@@ -1,11 +1,10 @@
-import altair as alt
 import streamlit as st
+import pandas as pd
 from src.dashboard.data import build_timeline, load_dashboard_data
 
-def show() -> None:
-    st.title("Cronograma dos projetos")
-    st.caption("Visualização das atividades, períodos e percentuais concluídos.")
+st.set_page_config(layout="wide")
 
+def show() -> None:
     try:
         projects, _, _ = load_dashboard_data()
     except (FileNotFoundError, ValueError) as error:
@@ -17,36 +16,80 @@ def show() -> None:
         st.info("Nenhum projeto foi encontrado em consolidado_projetos.csv.")
         return
 
-    selected_project = st.selectbox("Filtrar por projeto", project_names)
+    col_filtro = st.columns([2, 1])
+    with col_filtro:
+        selected_project = st.selectbox("Nome do Projeto", project_names, label_visibility="visible")
+
+    projeto_info = projects[projects["Projeto"] == selected_project].iloc[0] if not projects[projects["Projeto"] == selected_project].empty else None
+
+    def get_info(coluna, df_row, default="N/D"):
+        return str(df_row[coluna]) if df_row is not None and coluna in df_row else default
+
+    c1, c2, c3, c4, c5, c6 = st.columns(6)
+    c1.metric("Código", get_info("Código", projeto_info))
+    c2.metric("Mercado", get_info("Mercado", projeto_info))
+    c3.metric("Marca", get_info("Marca", projeto_info))
+    c4.metric("Responsável", get_info("Responsável", projeto_info))
+    c5.metric("Status", get_info("Situação", projeto_info))
+    c6.metric("Categoria de Projeto", get_info("Categoria", projeto_info))
+
+    st.write("")
+    c7, c8, c9, c10, c11, c12 = st.columns(6)
+    c7.metric("Abertura Briefing", get_info("Abertura Briefing", projeto_info))
+    c8.metric("Conclusão Briefing", get_info("Conclusão Briefing", projeto_info))
+    c9.metric("Prazo Original", get_info("Prazo Original", projeto_info))
+    c10.metric("Desvio em dias", get_info("Desvio", projeto_info, "0"))
+    c11.metric("Conclusão Prevista", get_info("Termino", projeto_info))
+    c12.metric("% Progresso", f"{get_info('Progresso (%)', projeto_info, '0')}%")
+
+    st.divider()
+
     timeline = build_timeline(projects, selected_project)
     if timeline.empty:
         st.info("Não há atividades com datas válidas para este projeto.")
         return
 
-    chart = (
-        alt.Chart(timeline)
-        .mark_bar()
-        .encode(
-            x=alt.X("Inicio:T", title="Início"),
-            x2=alt.X2("Termino visual:T"),
-            y=alt.Y("Atividade exibida:N", sort="-x", title=None),
-            color=alt.Color(
-                "Progresso (%):Q",
-                scale=alt.Scale(domain=[0, 100], scheme="viridis"),
-                title="Concluído (%)",
-            ),
-            tooltip=[
-                alt.Tooltip("Atividade:N", title="Atividade"),
-                alt.Tooltip("Recursos:N", title="Recursos"),
-                alt.Tooltip("Inicio:T", title="Início", format="%d/%m/%Y"),
-                alt.Tooltip("Termino:T", title="Término", format="%d/%m/%Y"),
-                alt.Tooltip("Progresso (%):Q", title="Concluído", format=".1f"),
-            ],
-        )
-        .properties(height=max(280, min(28 * len(timeline), 900)))
-        .interactive()
-    )
-    st.altair_chart(chart, width="stretch")
-    st.caption(f"{len(timeline)} atividades exibidas para **{selected_project}**.")
+    display_columns = [
+        "Atividade",
+        "Recursos",
+        "Progresso (%)",
+        "Duração",
+        "Inicio",
+        "Termino",
+        "Situação"
+    ]
+    
+    if "Duração" not in timeline.columns:
+        timeline["Duração"] = (pd.to_datetime(timeline["Termino"]) - pd.to_datetime(timeline["Inicio"])).dt.days
 
-show()
+    display = timeline[[col for col in display_columns if col in timeline.columns]].rename(
+        columns={
+            "Recursos": "Responsável",
+            "Progresso (%)": "% Completo",
+            "Inicio": "Inicio",
+            "Termino": "Fim",
+            "Situação": "Status Atividade"
+        }
+    ).copy()
+    
+    if "Inicio" in display.columns:
+        display["Inicio"] = pd.to_datetime(display["Inicio"]).dt.strftime("%d/%m/%y")
+    if "Fim" in display.columns:
+        display["Fim"] = pd.to_datetime(display["Fim"]).dt.strftime("%d/%m/%y")
+    
+    st.dataframe(
+        display,
+        hide_index=True,
+        width="stretch",
+        column_config={
+            "% Completo": st.column_config.ProgressColumn(
+                "% Completo", 
+                min_value=0, 
+                max_value=100, 
+                format="%.0f%%"
+            )
+        }
+    )
+
+if __name__ == "__main__":
+    show()
