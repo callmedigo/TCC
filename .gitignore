@@ -1,6 +1,6 @@
-*.__pycache__/
-synthetic/
-processed/
+__pycache__/
+*synthetic/
+*processed/
 *.csv
 *.json
 *.log
