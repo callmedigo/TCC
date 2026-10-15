@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import glob
 from datetime import datetime
-from pages import bsc, visao_geral, cronograma, proximas_atividades, graficos
+from views import bsc, visao_geral, cronograma, proximas_atividades, graficos
 
 st.set_page_config(
     page_title="Dashboard de Projetos",
