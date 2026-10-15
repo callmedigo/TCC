@@ -1,9 +1,6 @@
 from datetime import date
-
 import streamlit as st
-
 from src.dashboard.data import build_project_overview, load_dashboard_data
-
 
 def show() -> None:
     st.title("Visão geral dos projetos")
@@ -46,6 +43,5 @@ def show() -> None:
         },
     )
     st.caption(f"Situação calculada considerando a data de hoje: {today:%d/%m/%Y}.")
-
 
 show()

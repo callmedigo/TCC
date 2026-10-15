@@ -1,6 +1,5 @@
 from datetime import date
 from pathlib import Path
-
 import pandas as pd
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -17,7 +16,6 @@ PROJECT_COLUMNS = (
 )
 BSC_COLUMNS = ("Projeto", "Month", "MonthlyPercent", "CumulativePercent")
 
-
 def _read_csv(filename: str, required_columns: tuple[str, ...]) -> pd.DataFrame:
     path = PROCESSED_DIR / filename
     if not path.is_file():
@@ -32,7 +30,6 @@ def _read_csv(filename: str, required_columns: tuple[str, ...]) -> pd.DataFrame:
         )
     return dataframe.dropna(how="all").reset_index(drop=True)
 
-
 def _normalize_numeric(series: pd.Series) -> pd.Series:
     normalized = (
         series.astype("string")
@@ -40,7 +37,6 @@ def _normalize_numeric(series: pd.Series) -> pd.Series:
         .str.replace(",", ".", regex=False)
     )
     return pd.to_numeric(normalized, errors="coerce")
-
 
 def _prepare_projects(projects: pd.DataFrame) -> pd.DataFrame:
     prepared = projects.copy()
@@ -53,7 +49,6 @@ def _prepare_projects(projects: pd.DataFrame) -> pd.DataFrame:
     prepared["_duracao"] = _normalize_numeric(prepared["Duracao (dias)"])
     return prepared
 
-
 def _prepare_bsc(dataframe: pd.DataFrame) -> pd.DataFrame:
     prepared = dataframe.copy()
     prepared["Projeto"] = prepared["Projeto"].astype("string").str.strip()
@@ -62,17 +57,14 @@ def _prepare_bsc(dataframe: pd.DataFrame) -> pd.DataFrame:
     prepared["CumulativePercent"] = _normalize_numeric(prepared["CumulativePercent"])
     return prepared.dropna(subset=["Projeto", "Month"]).reset_index(drop=True)
 
-
 def load_dashboard_data() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     projects = _prepare_projects(_read_csv("consolidado_projetos.csv", PROJECT_COLUMNS))
     planned = _prepare_bsc(_read_csv("indicador_bsc_mensal.csv", BSC_COLUMNS))
     actual = _prepare_bsc(_read_csv("indicador_bsc_realizado.csv", BSC_COLUMNS))
     return projects, planned, actual
 
-
 def _is_project_summary(projects: pd.DataFrame) -> pd.Series:
     return projects["Recursos"].astype("string").str.contains("macro", case=False, na=False)
-
 
 def build_project_overview(projects: pd.DataFrame, today: date | None = None) -> pd.DataFrame:
     reference_date = today or date.today()
@@ -118,7 +110,6 @@ def build_project_overview(projects: pd.DataFrame, today: date | None = None) ->
         columns=["Projeto", "Início", "Término", "Atividades", "Progresso (%)", "Status"],
     )
 
-
 def build_timeline(projects: pd.DataFrame, project_name: str) -> pd.DataFrame:
     activities = projects.loc[
         (projects["Projeto"] == project_name)
@@ -140,7 +131,6 @@ def build_timeline(projects: pd.DataFrame, project_name: str) -> pd.DataFrame:
         )
     return activities.sort_values(["Inicio", "Termino", "Atividade"], kind="stable")
 
-
 def build_upcoming_activities(projects: pd.DataFrame, today: date | None = None) -> pd.DataFrame:
     reference_date = pd.Timestamp(today or date.today())
     activities = projects.loc[
@@ -157,7 +147,6 @@ def build_upcoming_activities(projects: pd.DataFrame, today: date | None = None)
     activities.loc[overdue, "Situação"] = "Atrasada"
     activities["Progresso (%)"] = activities["_percentual"]
     return activities.sort_values(["Inicio", "Projeto", "Atividade"], kind="stable")
-
 
 def build_bsc_comparison(planned: pd.DataFrame, actual: pd.DataFrame) -> pd.DataFrame:
     planned_values = planned[

@@ -8,7 +8,6 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = REPO_ROOT / "data" / "processed" / "consolidado_projetos.csv"
 DEFAULT_OUTPUT = REPO_ROOT / "data" / "processed" / "indicador_bsc_mensal.csv"
 
-
 def find_column(df, candidates, default_letter):
     def tokens(s):
         return re.findall(r"\w+", s.lower()) if isinstance(s, str) else []
@@ -29,25 +28,21 @@ def find_column(df, candidates, default_letter):
         return df.columns[default_index]
     raise ValueError(f"Coluna para {default_letter} não encontrada")
 
-
 def find_optional_column(df, candidates, default_letter):
     try:
         return find_column(df, candidates, default_letter)
     except ValueError:
         return None
 
-
 def load_and_clean(path):
     df = pd.read_csv(path, encoding="utf-8", dtype=str)
     df = df.dropna(how="all").reset_index(drop=True)
     return df
 
-
 def normalize_numeric(series):
     series = series.astype(str).str.replace(r"[^0-9,\.\-]", "", regex=True)
     series = series.str.replace(",", ".", regex=False)
     return pd.to_numeric(series, errors="coerce")
-
 
 def build_monthly_plan(df):
     project_col = find_column(df, ["projeto", "project", "project name", "nome do projeto"], "A")
@@ -144,13 +139,11 @@ def build_monthly_plan(df):
     summary_df = pd.DataFrame(records)
     return summary_df, df2
 
-
 def save_outputs(summary_df, output_csv):
     output_path = Path(output_csv)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     summary_df.to_csv(output_path, index=False, encoding="utf-8")
     return output_path
-
 
 def resolve_input_path(raw_input):
     input_path = Path(raw_input)
@@ -159,7 +152,6 @@ def resolve_input_path(raw_input):
     if not input_path.is_file():
         raise FileNotFoundError(f"Arquivo não encontrado: {input_path}")
     return input_path
-
 
 def cmd_calculate(args):
     input_path = resolve_input_path(args.input)
@@ -170,7 +162,6 @@ def cmd_calculate(args):
     print(f"Resumo mensal previsto salvo em: {output_path}")
     print(f"Projetos processados: {cleaned_df['Project'].nunique()}")
     print(f"Atividades válidas: {len(cleaned_df)}")
-
 
 def cmd_debug(args):
     input_path = resolve_input_path(args.input)
@@ -186,7 +177,6 @@ def cmd_debug(args):
         print(summary_df.head(20).to_string(index=False))
     except Exception as e:
         print(f"Erro durante build_monthly_plan: {e}")
-
 
 def main():
     parser = argparse.ArgumentParser(description="Ferramentas BSC: cálculo mensal previsto a partir de consolidado_projetos.csv.")

@@ -1,8 +1,6 @@
 import altair as alt
 import streamlit as st
-
 from src.dashboard.data import build_timeline, load_dashboard_data
-
 
 def show() -> None:
     st.title("Cronograma dos projetos")
@@ -50,6 +48,5 @@ def show() -> None:
     )
     st.altair_chart(chart, width="stretch")
     st.caption(f"{len(timeline)} atividades exibidas para **{selected_project}**.")
-
 
 show()

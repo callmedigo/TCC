@@ -1,7 +1,5 @@
 import streamlit as st
-
 from src.dashboard.data import build_upcoming_activities, load_dashboard_data
-
 
 def show() -> None:
     st.title("Próximas atividades")
@@ -55,6 +53,5 @@ def show() -> None:
             )
         },
     )
-
 
 show()

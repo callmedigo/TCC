@@ -1,5 +1,6 @@
 import argparse
 import math
+import re
 from pathlib import Path
 import pandas as pd
 
@@ -7,12 +8,10 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT_CSV = REPO_ROOT / "data" / "processed" / "consolidado_projetos.csv"
 DEFAULT_OUTPUT = REPO_ROOT / "data" / "processed" / "indicador_bsc_realizado.csv"
 
-
 def normalize_numeric(series):
     series = series.astype(str).str.replace(r"[^0-9,\.\-]", "", regex=True)
     series = series.str.replace(",", ".", regex=False)
     return pd.to_numeric(series, errors="coerce")
-
 
 def load_excel_actual(excel_path, header_row=8):
     """
@@ -23,10 +22,8 @@ def load_excel_actual(excel_path, header_row=8):
     df = df.dropna(how="all").reset_index(drop=True)
     return df
 
-
 def find_column_flex(df, candidates):
     """Localiza coluna de forma flexível, retornando None se não encontrar."""
-    import re
     
     def tokens(s):
         return re.findall(r"\w+", s.lower()) if isinstance(s, str) else []
@@ -43,7 +40,6 @@ def find_column_flex(df, candidates):
                 if col_tokens[i:i + len(cand_tokens)] == cand_tokens:
                     return col
     return None
-
 
 def load_and_clean_csv(csv_path):
     """Carrega o consolidado_projetos.csv como base de duração e datas."""
@@ -217,13 +213,11 @@ def build_monthly_actual(excel_df=None, csv_df=None):
     summary_df = pd.DataFrame(records)
     return summary_df, csv_df_clean
 
-
 def save_outputs(summary_df, output_csv):
     output_path = Path(output_csv)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     summary_df.to_csv(output_path, index=False, encoding="utf-8")
     return output_path
-
 
 def resolve_input_path(raw_input):
     input_path = Path(raw_input)
@@ -232,7 +226,6 @@ def resolve_input_path(raw_input):
     if not input_path.is_file():
         raise FileNotFoundError(f"Arquivo não encontrado: {input_path}")
     return input_path
-
 
 def cmd_calculate(args):
     csv_path = resolve_input_path(args.input_csv)
@@ -248,7 +241,6 @@ def cmd_calculate(args):
     print(f"Resumo mensal realizado salvo em: {output_path}")
     print(f"Projetos processados: {clean_data['Project'].nunique()}")
     print(f"Atividades vinculadas: {len(clean_data)}")
-
 
 def cmd_debug(args):
     csv_path = resolve_input_path(args.input_csv)
@@ -279,7 +271,6 @@ def cmd_debug(args):
     except Exception as e:
         print(f"Erro: {e}")
 
-
 def main():
     parser = argparse.ArgumentParser(description="Ferramentas BSC: cálculo mensal realizado a partir do CSV consolidado; Excel opcional.")
     sub = parser.add_subparsers(dest="cmd")
@@ -300,7 +291,6 @@ def main():
         parser.print_help()
         return
     args.func(args)
-
 
 if __name__ == "__main__":
     main()

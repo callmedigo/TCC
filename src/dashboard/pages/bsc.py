@@ -1,7 +1,5 @@
 import streamlit as st
-
 from src.dashboard.data import build_bsc_comparison, load_dashboard_data
-
 
 def show() -> None:
     st.title("Indicadores BSC")
@@ -63,6 +61,5 @@ def show() -> None:
         },
     )
     st.caption("O desvio é calculado como realizado menos planejado, em pontos percentuais.")
-
 
 show()
