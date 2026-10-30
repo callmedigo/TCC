@@ -90,7 +90,9 @@ python src/generator/synthetic_generator.py
 
 Cada lote com pelo menos três cronogramas inclui projetos no início, no meio e no fim do progresso. O corte é escolhido dentro de faixas diferentes para cada estágio, sem reutilizar uma atividade de corte no mesmo lote: início (15–30% das tarefas), meio (40–65%) e fim (75–95%). As tarefas antes do corte ficam em 100%, uma tarefa fica parcialmente concluída e todas as tarefas depois ficam em 0%; assim, projetos no início não recebem progresso artificial nas atividades finais. As atividades-resumo refletem o progresso ponderado das tarefas descendentes.
 
-Os XMLs gerados mantêm apenas os metadados essenciais do projeto e os campos das tarefas usados pela extração e pelo ProjectLibre. A hierarquia, dependências, calendários, recursos, linhas de base, percentuais e datas `Start`/`Finish` do modelo são preservados; datas já calculadas ficam disponíveis para a extração e para exibição no ProjectLibre. Dados redundantes de distribuição temporal dos recursos são omitidos, mas as alocações, unidades, trabalho e datas dos recursos permanecem. Os códigos gerados começam com duas letras aleatórias (por exemplo, `AB-001-26`).
+Cada XML sintético recebe um nome de projeto único e uma data de abertura aleatória, preservada em `data/processed/lista_mestre_projetos.csv` junto ao código do arquivo. O `StartDate` do projeto e as datas do cronograma são deslocados pelo mesmo número de semanas, mantendo a duração e os dias da semana do modelo. O dashboard associa o código e a abertura ao projeto pelo nome.
+
+Os XMLs gerados mantêm os metadados essenciais do projeto e os campos das tarefas usados pela extração e pelo ProjectLibre. A hierarquia, dependências, calendários, recursos, linhas de base e percentuais são preservados; as datas `Start`/`Finish` mantêm os intervalos do modelo, deslocados junto à nova data de abertura. Dados redundantes de distribuição temporal dos recursos são omitidos, mas as alocações, unidades, trabalho e datas dos recursos permanecem. Os códigos gerados começam com duas letras aleatórias (por exemplo, `AB-001-26`).
 
 Para escolher outro modelo ou ajustar os padrões:
 python src/generator/synthetic_generator.py caminho/para/modelo.xml --count 5
@@ -98,6 +100,7 @@ python src/generator/synthetic_generator.py caminho/para/modelo.xml --count 5
 Parâmetros
 --count: quantidade de arquivos gerados
 --output-dir: pasta de saída (padrão data/synthetic)
+--master-list: CSV da lista mestre (padrão data/processed/lista_mestre_projetos.csv)
 --seed: semente para resultados reprodutíveis
 
 ### Extração e BSC

@@ -22,6 +22,12 @@ def show() -> None:
             overview[col] = "N/D"
     if "Código" not in overview.columns:
         overview["Código"] = "-"
+    if "Abertura Briefing" in overview.columns:
+        overview["Abertura Briefing"] = (
+            pd.to_datetime(overview["Abertura Briefing"], errors="coerce")
+            .dt.strftime("%d/%m/%Y")
+            .fillna("N/D")
+        )
 
     f1, f2, f3, f4, f5, f6, f7 = st.columns(7)
     
@@ -88,6 +94,7 @@ def show() -> None:
         "Código": "Código",
         "Mercado": "Mercado",
         "Projeto": "Nome do Projeto",
+        "Abertura Briefing": "Abertura Briefing",
         "Marca": "Marca",
         "Responsável": "Responsável",
         "Categoria": "Categoria",

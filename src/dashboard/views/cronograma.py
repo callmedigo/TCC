@@ -23,7 +23,12 @@ def show() -> None:
     projeto_info = projects[projects["Projeto"] == selected_project].iloc[0] if not projects[projects["Projeto"] == selected_project].empty else None
 
     def get_info(coluna, df_row, default="N/D"):
-        return str(df_row[coluna]) if df_row is not None and coluna in df_row else default
+        if df_row is None or coluna not in df_row or pd.isna(df_row[coluna]):
+            return default
+        value = df_row[coluna]
+        if coluna == "Abertura Briefing":
+            return pd.to_datetime(value).strftime("%d/%m/%Y")
+        return str(value)
 
     c1, c2, c3, c4, c5, c6 = st.columns(6)
     c1.metric("Código", get_info("Código", projeto_info))

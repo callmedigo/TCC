@@ -57,8 +57,35 @@ def _prepare_bsc(dataframe: pd.DataFrame) -> pd.DataFrame:
     prepared["CumulativePercent"] = _normalize_numeric(prepared["CumulativePercent"])
     return prepared.dropna(subset=["Projeto", "Month"]).reset_index(drop=True)
 
+def _merge_master_list(projects: pd.DataFrame) -> pd.DataFrame:
+    master_path = PROCESSED_DIR / "lista_mestre_projetos.csv"
+    if not master_path.is_file():
+        return projects
+
+    master = pd.read_csv(master_path, encoding="utf-8-sig", dtype=str)
+    required_columns = ("Código", "Projeto", "Data Abertura")
+    missing_columns = [column for column in required_columns if column not in master.columns]
+    if missing_columns:
+        raise ValueError(
+            f"O arquivo {master_path} não contém as colunas obrigatórias: "
+            f"{', '.join(missing_columns)}."
+        )
+
+    master["Projeto"] = master["Projeto"].astype("string").str.strip()
+    master["Abertura Briefing"] = pd.to_datetime(
+        master["Data Abertura"], errors="coerce"
+    )
+    metadata = master[["Projeto", "Código", "Abertura Briefing"]]
+    return projects.merge(
+        metadata,
+        on="Projeto",
+        how="left",
+        validate="many_to_one",
+    )
+
 def load_dashboard_data() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     projects = _prepare_projects(_read_csv("consolidado_projetos.csv", PROJECT_COLUMNS))
+    projects = _merge_master_list(projects)
     planned = _prepare_bsc(_read_csv("indicador_bsc_mensal.csv", BSC_COLUMNS))
     actual = _prepare_bsc(_read_csv("indicador_bsc_realizado.csv", BSC_COLUMNS))
     return projects, planned, actual
@@ -97,6 +124,12 @@ def build_project_overview(projects: pd.DataFrame, today: date | None = None) ->
         records.append(
             {
                 "Projeto": project_name,
+                "Código": group["Código"].iloc[0] if "Código" in group else "-",
+                "Abertura Briefing": (
+                    group["Abertura Briefing"].iloc[0]
+                    if "Abertura Briefing" in group
+                    else pd.NaT
+                ),
                 "Início": start,
                 "Término": end,
                 "Atividades": len(group),
@@ -107,7 +140,16 @@ def build_project_overview(projects: pd.DataFrame, today: date | None = None) ->
 
     return pd.DataFrame(
         records,
-        columns=["Projeto", "Início", "Término", "Atividades", "Progresso (%)", "Status"],
+        columns=[
+            "Projeto",
+            "Código",
+            "Abertura Briefing",
+            "Início",
+            "Término",
+            "Atividades",
+            "Progresso (%)",
+            "Status",
+        ],
     )
 
 def build_timeline(projects: pd.DataFrame, project_name: str) -> pd.DataFrame:
