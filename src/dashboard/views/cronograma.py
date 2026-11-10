@@ -16,8 +16,8 @@ def show() -> None:
         st.info("Nenhum projeto foi encontrado em consolidado_projetos.csv.")
         return
 
-    col_filtro = st.columns([2, 1])
-    with col_filtro:
+    filtro_coluna, _ = st.columns([2, 1])
+    with filtro_coluna:
         selected_project = st.selectbox("Nome do Projeto", project_names, label_visibility="visible")
 
     projeto_info = projects[projects["Projeto"] == selected_project].iloc[0] if not projects[projects["Projeto"] == selected_project].empty else None

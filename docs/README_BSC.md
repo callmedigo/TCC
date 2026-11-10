@@ -1,6 +1,32 @@
 # BSC: Cálculo Mensal a partir do Consolidado de Projetos
 
-Este documento descreve o propósito, funcionamento e uso da ferramenta `BSC/bsc_previsto.py`.
+Este documento descreve o propósito, funcionamento e uso de `src/bsc/bsc_previsto.py` e `src/bsc/bsc_realizado.py`.
+
+## Preparar e executar
+
+Execute os comandos na raiz do repositório. Para preparar o ambiente uma vez:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+Antes do cálculo, gere ou atualize o CSV consolidado executando:
+
+```powershell
+python .\src\main.py
+```
+
+Se também precisar criar cronogramas de teste, gere-os antes da extração:
+
+```powershell
+python .\src\generator\synthetic_generator.py --count 5 --seed 123
+python .\src\main.py
+```
+
+O gerador mantém a lista mestre separada em `data/processed/lista_mestre_projetos.csv`; a extração não sobrescreve esse arquivo.
 
 Resumo
 - Objetivo: calcular o percentual previsto por mês para cada projeto usando o arquivo consolidado de tarefas.
@@ -19,10 +45,11 @@ Como funciona (visão rápida)
 
 Uso - exemplos
 
-Gerar resumo mensal previsto por projeto:
+Gerar o resumo mensal previsto e, em seguida, o realizado:
 
 ```powershell
 python .\src\bsc\bsc_previsto.py calculate
+python .\src\bsc\bsc_realizado.py calculate
 ```
 
 Se quiser passar input e output explicitamente:
@@ -37,13 +64,25 @@ Executar modo debug:
 python .\src\bsc\bsc_previsto.py debug --input data\processed\consolidado_projetos.csv
 ```
 
-Calcular o realizado a partir dos percentuais dos cronogramas:
+Para usar uma planilha com percentuais realizados em vez dos percentuais extraídos dos XMLs, instale `openpyxl` e informe o arquivo:
 
 ```powershell
-python .\src\bsc\bsc_realizado.py calculate
+python -m pip install openpyxl
+python .\src\bsc\bsc_realizado.py calculate --input-excel "caminho\para\arquivo.xlsx"
 ```
 
-Os caminhos padrão são absolutos e baseados na raiz do repositório, portanto os comandos também funcionam quando executados de outra pasta.
+Após gerar os CSVs de extração e BSC, execute o dashboard:
+
+```powershell
+python -m streamlit run .\src\dashboard\app.py
+```
+
+Os caminhos padrão dos cálculos BSC são baseados na raiz do repositório. Para consultar as opções disponíveis:
+
+```powershell
+python .\src\bsc\bsc_previsto.py --help
+python .\src\bsc\bsc_realizado.py --help
+```
 
 Observações
 - O script usa o projeto como agrupador e gera percentuais mensais por projeto.

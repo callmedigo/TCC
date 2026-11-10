@@ -1,32 +1,8 @@
-# TCC
-ETL para Gestão de Projetos com automação e integração entre diversas ferramentas (ProjectLibre, PowerBI, gerenciamento de pastas) 
+# TCC - 
+Sistema de ETL para Gestão de Projetos com automação e integração entre diversas ferramentas (ProjectLibre, Streamlit, gerenciamento de pastas) 
 ### Definições
 
 1. **Mapeamento dos dados atualmente**
-
-**Lista Mestre**
-| Colunas         | Descrição                         |
-|-----------------|:---------------------------------:|
-| Mercado         | Mercado do projeto (ME/MI/B2B)    |
-| Código          | Código de identificação do projeto|
-| Data Abertura   | Data de abertura (Briefing)       |
-| Data Conclusão  | Data de conclusão (Briefing)      |
-| Projeto         | Nome do projeto                   |
-| Marca           | Qual marca da empresa ele atende  |
-| Responsavel     | Responsavel do projeto            |
-| Tipo do Projeto | Classificação do projeto          |
-| Cronograma      | Caso exista ou não e o Link       |
-| Status          | Status atual de fases             |
-| Prazo           | Prazo atividade atual             |
-| Atividades      | Atividade atual                   |
-| Anotações       | Anotações importantes             |
-| Ano             | Ano de abertura do projeto        |
-| Atrasado        | Se está atrasado (Sim/Não)        |
-| Motivo Atraso   | Motivos do atraso                 |
-| Lançamento      | Data de Lançamento                |
-| Duração Prevista| Duração (Inicio/Fim Briefing)     |
-| Cron. Conclusão | Conclusão que está no cronograma  |
-| Duração Real    | Duração (Inicio/Fim Cronograma)   |
 
 **• Organização das pastas  
 • Cronogramas .xml**  
@@ -83,10 +59,46 @@ ETL para Gestão de Projetos com automação e integração entre diversas ferra
 • **[Documentação]** Escrita da Conclusão (limitações do projeto e melhorias futuras como por exemplo a escalabilidade e integração com ferramentas como  o TOTVS Fluig).  
 • **[Documentação]** Formatação ABNT (referências, sumário, figuras).  
 • **[Documentação]** Revisão ortográfica e lógica do texto.  
-• **[Documentação]** Preparação dos slides para a banca.  
+• **[Documentação]** Preparação dos slides para a banca.
 
-Comando (usa `data/raw/Cronograma Completo XML.xml` como modelo e grava os arquivos em `data/synthetic`):
-python src/generator/synthetic_generator.py
+## Como preparar e executar
+
+Execute os comandos abaixo no PowerShell, a partir da raiz do repositório.
+
+### Preparar o ambiente (uma vez)
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+Se o PowerShell bloquear a ativação do ambiente, use diretamente `.\.venv\Scripts\python.exe` no lugar de `python` nos comandos a seguir.
+
+### Gerar cronogramas sintéticos
+
+```powershell
+python .\src\generator\synthetic_generator.py
+```
+
+Por padrão, gera cinco XMLs usando `data/raw/Cronograma Completo XML.xml`, grava-os em `data/synthetic` e acrescenta código, nome e data de abertura a `data/processed/lista_mestre_projetos.csv`. Para definir a quantidade e obter resultados repetíveis:
+
+```powershell
+python .\src\generator\synthetic_generator.py --count 5 --seed 123
+```
+
+Para usar outro modelo, pasta de saída ou arquivo da lista mestre:
+
+```powershell
+python .\src\generator\synthetic_generator.py "data\raw\Cronograma Modelo XML.xml" --count 5 --output-dir "data\synthetic" --master-list "data\processed\lista_mestre_projetos.csv" --seed 123
+```
+
+Use `--no-noise` para gerar o progresso sem atrasos aleatórios. Consulte todas as opções com:
+
+```powershell
+python .\src\generator\synthetic_generator.py --help
+```
 
 Cada lote com pelo menos três cronogramas inclui projetos no início, no meio e no fim do progresso. O corte é escolhido dentro de faixas diferentes para cada estágio, sem reutilizar uma atividade de corte no mesmo lote: início (15–30% das tarefas), meio (40–65%) e fim (75–95%). As tarefas antes do corte ficam em 100%, uma tarefa fica parcialmente concluída e todas as tarefas depois ficam em 0%; assim, projetos no início não recebem progresso artificial nas atividades finais. As atividades-resumo refletem o progresso ponderado das tarefas descendentes.
 
@@ -94,38 +106,37 @@ Cada XML sintético recebe um nome de projeto único e uma data de abertura alea
 
 Os XMLs gerados mantêm os metadados essenciais do projeto e os campos das tarefas usados pela extração e pelo ProjectLibre. A hierarquia, dependências, calendários, recursos, linhas de base e percentuais são preservados; as datas `Start`/`Finish` mantêm os intervalos do modelo, deslocados junto à nova data de abertura. Dados redundantes de distribuição temporal dos recursos são omitidos, mas as alocações, unidades, trabalho e datas dos recursos permanecem. Os códigos gerados começam com duas letras aleatórias (por exemplo, `AB-001-26`).
 
-Para escolher outro modelo ou ajustar os padrões:
-python src/generator/synthetic_generator.py caminho/para/modelo.xml --count 5
-
-Parâmetros
---count: quantidade de arquivos gerados
---output-dir: pasta de saída (padrão data/synthetic)
---master-list: CSV da lista mestre (padrão data/processed/lista_mestre_projetos.csv)
---seed: semente para resultados reprodutíveis
-
 ### Extração e BSC
 
-Execute o fluxo de extração para ler os cronogramas de `data/raw` e `data/synthetic` e gerar os CSVs em `data/processed`:
+Depois de gerar (ou atualizar) os cronogramas, extraia os XMLs de `data/raw` e `data/synthetic`:
 
-```bash
-python src/main.py
+```powershell
+python .\src\main.py
 ```
 
-Com o consolidado gerado, calcule os indicadores previsto e realizado:
+O comando atualiza `data/processed/arquivos_xml.csv` e `data/processed/consolidado_projetos.csv`. A lista mestre gerada junto aos cronogramas é um arquivo separado e não é sobrescrita pela extração.
 
-```bash
-python src/bsc/bsc_previsto.py calculate
-python src/bsc/bsc_realizado.py calculate
+Calcule os indicadores BSC previsto e realizado:
+
+```powershell
+python .\src\bsc\bsc_previsto.py calculate
+python .\src\bsc\bsc_realizado.py calculate
 ```
 
-Os dois BSC usam `data/processed/consolidado_projetos.csv` como entrada e salvam seus resultados em `data/processed`. O BSC realizado usa os percentuais dos cronogramas; pode-se informar uma planilha opcional com `--input-excel`.
+Os dois comandos usam `data/processed/consolidado_projetos.csv` como entrada e gravam os resultados em `data/processed`. O BSC realizado usa os percentuais extraídos dos cronogramas. Se quiser fornecer uma planilha com percentuais realizados, instale também `openpyxl` (`python -m pip install openpyxl`) e informe-a com `--input-excel "caminho\para\arquivo.xlsx"`.
+
+Por exemplo:
+
+```powershell
+python .\src\bsc\bsc_realizado.py calculate --input-excel "caminho\para\arquivo.xlsx"
+```
 
 ### Dashboard Streamlit
 
-Com os CSVs atualizados em `data/processed`, execute o dashboard a partir da raiz do repositório:
+Com os CSVs atualizados, inicie o dashboard a partir da raiz do repositório:
 
 ```powershell
-python -m streamlit run src\dashboard\app.py
+python -m streamlit run .\src\dashboard\app.py
 ```
 
-O menu lateral contém quatro telas: visão geral dos projetos, cronograma filtrável por projeto, atividades em aberto agrupadas por mês (incluindo itens atrasados) e comparação mensal/acumulada dos indicadores BSC planejados e realizados.
+O menu lateral contém telas para a lista mestre/visão geral, gráficos, cronogramas, atividades mensais e comparação BSC. Para atualizar os dados exibidos após uma nova geração, execute novamente `python .\src\main.py` e os comandos BSC antes de reiniciar ou atualizar o dashboard.
