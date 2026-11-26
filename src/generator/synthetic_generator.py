@@ -1,5 +1,3 @@
-"""Compatibility entry point for generating synthetic Project XML schedules."""
-
 import sys
 from pathlib import Path
 
@@ -92,7 +90,6 @@ __all__ = [
     'validate_cascade',
     'write_progress',
 ]
-
 
 if __name__ == '__main__':
     main()

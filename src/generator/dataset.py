@@ -5,7 +5,6 @@ import string
 import xml.etree.ElementTree as ET
 from datetime import datetime
 from pathlib import Path
-
 from .generation import generate_synthetic_xml
 from .project_metadata import (
     append_master_project,
@@ -15,14 +14,12 @@ from .project_metadata import (
     read_master_projects,
 )
 
-
 DEFAULT_MASTER_LIST_PATH = (
     Path(__file__).resolve().parents[2]
     / 'data'
     / 'processed'
     / 'lista_mestre_projetos.csv'
 )
-
 
 def get_max_sequence(output_dir, master_list_path=None):
     """Lê a pasta de saída e descobre qual foi o último número gerado."""
@@ -36,14 +33,12 @@ def get_max_sequence(output_dir, master_list_path=None):
         max_sequence = max(max_sequence, latest_master_sequence(master_list_path))
     return max_sequence
 
-
 def create_synthetic_dataset(
     source_xml, output_dir, count, seed=None, noise=True, master_list_path=None
 ):
     if count < 1:
         raise ValueError('A quantidade de cronogramas deve ser maior que zero.')
     rng = random.Random(seed)
-
     os.makedirs(output_dir, exist_ok=True)
 
     try:
@@ -71,7 +66,6 @@ def create_synthetic_dataset(
 
     progress_stages = progress_stages[:count]
     rng.shuffle(progress_stages)
-
     start_sequence = get_max_sequence(output_dir, master_path)
 
     for index in range(1, count + 1):

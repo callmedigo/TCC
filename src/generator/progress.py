@@ -1,5 +1,4 @@
 from datetime import timedelta
-
 from .constants import (
     FF,
     FRONTIER_DAYS,
@@ -19,7 +18,6 @@ from .schedule import (
 )
 from .xml_utils import back_to_weekday, format_duration, remove_child, set_child
 
-
 def planned_percentage(item, status_date):
     """% que a tarefa teria na data de status SE tudo ocorresse conforme o planejado."""
     start, finish = item['start'], item['finish']
@@ -29,7 +27,6 @@ def planned_percentage(item, status_date):
         return 0
     elapsed = (status_date - start) / (finish - start)
     return max(1, min(99, round(elapsed * 100)))
-
 
 def apply_noise(item, planned, status_date, rng):
     """Introduz atrasos na fronteira do trabalho, em tarefas recém-finalizadas ou em andamento.
@@ -46,7 +43,6 @@ def apply_noise(item, planned, status_date, rng):
     if rng.random() < PROB_SLIP_START:
         return 0
     return max(1, round(planned * rng.uniform(0.5, 1.0)))
-
 
 def enforce_dependencies(item, percentage, links, info, final):
     """Aplica a regra de cascata: uma tarefa só avança se as predecessoras permitirem."""
@@ -70,7 +66,6 @@ def enforce_dependencies(item, percentage, links, info, final):
         percentage = 0
     return percentage
 
-
 def compute_leaf_percentages(info, order, progress_stage, rng, noise):
     leaves = [uid for uid in order if not info[uid]['summary']]
     if progress_stage == 'complete':
@@ -92,7 +87,6 @@ def compute_leaf_percentages(info, order, progress_stage, rng, noise):
             item, percentage, effective_links(info, uid), info, final
         )
     return final, status_date
-
 
 def write_progress(item, percentage, is_summary):
     task = item['task']
@@ -139,7 +133,6 @@ def write_progress(item, percentage, is_summary):
         set_child(task, 'Stop', stop.isoformat(timespec='seconds'))
         set_child(task, 'Resume', stop.isoformat(timespec='seconds'))
 
-
 def assign_completion_percentages(root, progress_stage, rng, noise=True):
     info, order = load_schedule(root)
     leaf_pct, status_date = compute_leaf_percentages(
@@ -170,7 +163,6 @@ def assign_completion_percentages(root, progress_stage, rng, noise=True):
         write_progress(item, percentage, is_summary=True)
 
     return status_date
-
 
 def validate_cascade(root):
     """Retorna lista de violações da regra de cascata no XML gerado."""

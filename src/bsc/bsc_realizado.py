@@ -47,7 +47,6 @@ def load_and_clean_csv(csv_path):
     df = df.dropna(how="all").reset_index(drop=True)
     return df
 
-
 def build_monthly_actual(excel_df=None, csv_df=None):
     """
     Calcula o percentual realizado por mês, usando:

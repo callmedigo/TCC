@@ -1,6 +1,5 @@
 import re
 
-
 NAMESPACE = 'http://schemas.microsoft.com/project'
 NS = {'p': NAMESPACE}
 

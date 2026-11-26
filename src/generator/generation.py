@@ -1,9 +1,7 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime
-
 from .constants import NS
 from .progress import assign_completion_percentages, validate_cascade
-
 
 SCHEDULE_DATE_TAGS = {
     'StartDate',
@@ -17,7 +15,6 @@ SCHEDULE_DATE_TAGS = {
     'FromDate',
     'ToDate',
 }
-
 
 def shift_schedule_dates(root, opening_date):
     start_date_tag = root.find('p:StartDate', NS)
@@ -34,7 +31,6 @@ def shift_schedule_dates(root, opening_date):
         if tag == 'ConstraintDate' and value.year == 1970:
             continue
         element.text = (value + offset).isoformat()
-
 
 def generate_synthetic_xml(
     source_path, output_path, project_name, progress_stage, rng, noise=True,

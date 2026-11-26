@@ -1,7 +1,6 @@
 from .constants import FS, NS
 from .xml_utils import duration_to_seconds, parse_dt
 
-
 def load_schedule(root):
     """Lê tarefas, hierarquia (resumo/folha) e dependências."""
     tasks = root.findall('.//p:Task', NS)
@@ -58,11 +57,9 @@ def load_schedule(root):
 
     return info, order
 
-
 def leaves_of(info, uid):
     """Se for resumo, devolve as folhas dentro dele; senão, a própria tarefa."""
     return info[uid]['leaves'] if info[uid]['summary'] else [uid]
-
 
 def effective_links(info, uid):
     """Links da própria folha + links herdados dos resumos ancestrais."""
@@ -70,7 +67,6 @@ def effective_links(info, uid):
     for summary_uid in info[uid]['ancestors']:
         links.extend(info[summary_uid]['links'])
     return [(predecessor, link_type) for predecessor, link_type in dict.fromkeys(links)]
-
 
 def dependency_order(info, order):
     """Ordem topológica REAL das folhas (predecessoras sempre antes das sucessoras)."""

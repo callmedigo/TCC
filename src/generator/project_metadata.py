@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import random
 
-
 MASTER_LIST_COLUMNS = ('Código', 'Projeto', 'Data Abertura')
 PROJECT_NAME_PARTS = (
     'Aurora',
@@ -24,7 +23,6 @@ PROJECT_NAME_PARTS = (
     'Equilíbrio',
 )
 
-
 def read_master_projects(master_list_path):
     path = Path(master_list_path)
     if not path.is_file():
@@ -40,7 +38,6 @@ def read_master_projects(master_list_path):
             )
         return list(reader)
 
-
 def generate_project_name(rng, existing_names):
     available_names = {
         f'Projeto {first} {second}'
@@ -52,11 +49,9 @@ def generate_project_name(rng, existing_names):
         raise ValueError('Não há nomes únicos disponíveis para novos projetos.')
     return rng.choice(sorted(available_names))
 
-
 def generate_opening_date(source_start, rng):
     """Escolhe uma data em outra semana do ano, preservando o dia da semana do modelo."""
     return source_start + timedelta(weeks=rng.randint(0, 51))
-
 
 def append_master_project(master_list_path, project_code, project_name, opening_date):
     path = Path(master_list_path)
@@ -80,7 +75,6 @@ def append_master_project(master_list_path, project_code, project_name, opening_
             'Data Abertura': opening_date.date().isoformat(),
             **{column: '' for column in columns if column not in MASTER_LIST_COLUMNS},
         })
-
 
 def latest_master_sequence(master_list_path):
     sequence = 0

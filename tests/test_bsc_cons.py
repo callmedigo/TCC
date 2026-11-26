@@ -1,16 +1,10 @@
-"""Testes das regras de ICPP, IPP e IAP com um cronograma pequeno e conhecido.
-
-Execução (na raiz do repositório):  python -m unittest discover -s tests -v
-"""
 import sys
 import unittest
 from pathlib import Path
-
 import pandas as pd
+import bsc_cons
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src" / "bsc"))
-import bsc_cons  # noqa: E402
-
 
 def make_activities(rows):
     df = pd.DataFrame(rows, columns=["Projeto", "Atividade", "Recursos", "Percentual completo", "Inicio", "Termino"])
@@ -20,7 +14,6 @@ def make_activities(rows):
     df["Percentual"] = df["Percentual completo"].astype(float)
     df["Mes"] = df["Termino"].dt.strftime("%Y-%m")
     return df
-
 
 ROWS = [
     # Projeto A: em janeiro, 2 de 2 concluídas; em fevereiro, 1 de 2 (atraso).
@@ -34,7 +27,6 @@ ROWS = [
     ("B", "b1", "Marketing", 100, "2026-01-05", "2026-01-15"),
     ("B", "b2", "Desconhecido (-65535)", 100, "2026-02-02", "2026-02-12"),
 ]
-
 
 class BscConsTest(unittest.TestCase):
     def setUp(self):
@@ -80,7 +72,6 @@ class BscConsTest(unittest.TestCase):
         refs = bsc_cons.infer_reference_dates(self.activities, "2026-03-31")
         due = bsc_cons.due_activities(self.activities, refs)
         self.assertIn("a5", set(due["Atividade"]))
-
 
 if __name__ == "__main__":
     unittest.main()

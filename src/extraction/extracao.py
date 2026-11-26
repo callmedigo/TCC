@@ -88,7 +88,6 @@ def parse_mspdi_to_list(file_path):
     root = tree.getroot()
     return _parse_mspdi_root(root, os.path.basename(file_path))
 
-
 def _parse_mspdi_root(root, project_label):
     ns = {'p': 'http://schemas.microsoft.com/project'}
 
@@ -216,7 +215,6 @@ def _parse_mspdi_root(root, project_label):
                 'UID': task_uid,
                 'OutlineNumber': outline_number
             })
-
     return tasks
 
 def extract_xml_from_pod(pod_path):
@@ -260,7 +258,6 @@ def parse_mspdi_from_pod(pod_path):
             root = ET.fromstring(xml_text)
         else:
             raise
-
     return _parse_mspdi_root(root, os.path.basename(pod_path))
 
 def processar_xmls_recursivos(diretorio_raiz):

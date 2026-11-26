@@ -1,8 +1,6 @@
 import argparse
 from pathlib import Path
-
 from .dataset import DEFAULT_MASTER_LIST_PATH, create_synthetic_dataset
-
 
 def main():
     project_root = Path(__file__).resolve().parents[2]
