@@ -2,7 +2,6 @@ import altair as alt
 import streamlit as st
 from src.dashboard.data import build_bsc_comparison, load_dashboard_data
 
-
 MONTHLY_FIELDS = ["Planejado mensal (%)", "Realizado mensal (%)"]
 CUMULATIVE_FIELDS = ["Planejado acumulado (%)", "Realizado acumulado (%)"]
 SERIES_DOMAIN = [
@@ -12,7 +11,6 @@ SERIES_DOMAIN = [
     "Realizado acumulado (%)",
 ]
 SERIES_COLORS = ["#2563eb", "#10b981", "#f59e0b", "#ef4444"]
-
 
 def _build_project_chart(comparison):
     months = sorted(comparison["Month"].dropna().unique().tolist())
@@ -62,7 +60,6 @@ def _build_project_chart(comparison):
         height=400,
         title="Percentual mensal (colunas) e acumulado (linhas)",
     )
-
 
 def show() -> None:
     st.title("Indicadores BSC")
@@ -117,7 +114,6 @@ def show() -> None:
             _build_project_chart(project_comparison),
             width="stretch",
         )
-
 
 if __name__ == "__main__":
     show()

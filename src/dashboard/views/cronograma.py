@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 from src.dashboard.data import build_timeline, load_dashboard_data
-
 st.set_page_config(layout="wide")
 
 def show() -> None:

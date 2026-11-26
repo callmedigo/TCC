@@ -15,6 +15,9 @@ PROJECT_COLUMNS = (
     "Duracao (dias)",
 )
 BSC_COLUMNS = ("Projeto", "Month", "MonthlyPercent", "CumulativePercent")
+ICPP_COLUMNS = ("Projeto", "Month", "DataReferencia", "PrevistoAcumulado", "RealizadoAcumulado", "DeltaAV", "ICPP", "MesParcial")
+IPP_COLUMNS = ("Month", "ProjetosAtivos", "ProjetosConformes", "IPP")
+IAP_COLUMNS = ("Setor", "Month", "AtividadesPlanejadas", "AtividadesRealizadas", "IAP")
 
 def _read_csv(filename: str, required_columns: tuple[str, ...]) -> pd.DataFrame:
     path = PROCESSED_DIR / filename
@@ -89,6 +92,20 @@ def load_dashboard_data() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     planned = _prepare_bsc(_read_csv("indicador_bsc_mensal.csv", BSC_COLUMNS))
     actual = _prepare_bsc(_read_csv("indicador_bsc_realizado.csv", BSC_COLUMNS))
     return projects, planned, actual
+
+def load_indicator_data() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Carrega ICPP, IPP e IAP gerados por src/bsc/bsc_cons.py."""
+    icpp = _read_csv("indicador_icpp.csv", ICPP_COLUMNS)
+    ipp = _read_csv("indicador_ipp.csv", IPP_COLUMNS)
+    iap = _read_csv("indicador_iap.csv", IAP_COLUMNS)
+    for column in ("PrevistoAcumulado", "RealizadoAcumulado", "DeltaAV", "ICPP"):
+        icpp[column] = _normalize_numeric(icpp[column]).astype("float64")
+    icpp["MesParcial"] = icpp["MesParcial"].astype("string").str.lower().eq("true")
+    for column in ("ProjetosAtivos", "ProjetosConformes", "IPP"):
+        ipp[column] = _normalize_numeric(ipp[column]).astype("float64")
+    for column in ("AtividadesPlanejadas", "AtividadesRealizadas", "IAP"):
+        iap[column] = _normalize_numeric(iap[column]).astype("float64")
+    return icpp, ipp, iap
 
 def _is_project_summary(projects: pd.DataFrame) -> pd.Series:
     return projects["Recursos"].astype("string").str.contains("macro", case=False, na=False)

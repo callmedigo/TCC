@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from datetime import date
 from src.dashboard.data import build_project_overview, load_dashboard_data
-
 st.set_page_config(layout="wide")
 
 def show() -> None:

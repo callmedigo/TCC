@@ -3,12 +3,10 @@ import pandas as pd
 import streamlit as st
 from src.dashboard.data import load_indicator_data
 
-
 def _situacao(valor) -> str:
     if pd.isna(valor):
         return "Sem dado"
     return "Em dia" if valor >= 1 else "Atrasado"
-
 
 def _icpp_tab(icpp: pd.DataFrame) -> None:
     st.caption(
@@ -50,7 +48,6 @@ def _icpp_tab(icpp: pd.DataFrame) -> None:
     target = alt.Chart(pd.DataFrame({"y": [1.0]})).mark_rule(strokeDash=[6, 4], color="#ef4444").encode(y="y:Q")
     st.altair_chart((line + target).properties(height=380), width="stretch")
 
-
 def _ipp_tab(ipp: pd.DataFrame) -> None:
     st.caption(
         "IPP = projetos que concluíram todas as atividades previstas no mês / projetos ativos no mês x 100. "
@@ -73,7 +70,6 @@ def _ipp_tab(ipp: pd.DataFrame) -> None:
         hide_index=True,
         use_container_width=True,
     )
-
 
 def _iap_tab(iap: pd.DataFrame) -> None:
     st.caption(
@@ -101,7 +97,6 @@ def _iap_tab(iap: pd.DataFrame) -> None:
     )
     st.dataframe(summary, hide_index=True, use_container_width=True)
 
-
 def show() -> None:
     st.title("Indicadores: ICPP, IPP e IAP")
     try:
@@ -124,7 +119,6 @@ def show() -> None:
                 st.info(f"Sem dados de {nome}.")
             else:
                 desenhar(dados)
-
 
 if __name__ == "__main__":
     show()
