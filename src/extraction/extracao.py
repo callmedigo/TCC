@@ -305,10 +305,33 @@ def processar_xmls_recursivos(diretorio_raiz):
                     'Nome do Arquivo': arquivo,
                     'Pasta': pasta_relativa if pasta_relativa != "Root" else "teste",
                     'Status de Leitura': status_leitura,
-                    'Caminho Completo': caminho_completo
+                    'Caminho Completo': caminho_relativo(caminho_completo)
                 })
     
     return arquivo_infos, tarefas_consolidadas
+
+def caminho_relativo(caminho):
+    """Grava caminhos relativos à raiz do repositório, sem expor diretórios pessoais."""
+    try:
+        return str(Path(caminho).resolve().relative_to(REPO_ROOT)).replace("\\", "/")
+    except ValueError:
+        return Path(caminho).name
+
+def desambiguar_nomes_de_projeto(tarefas):
+    """Diferencia projetos de arquivos distintos que compartilham o mesmo nome.
+
+    Os indicadores BSC agrupam as atividades pelo nome do projeto; sem esta etapa,
+    cronogramas diferentes com o mesmo título seriam somados como se fossem um só.
+    """
+    arquivos_por_projeto = {}
+    for tarefa in tarefas:
+        arquivos_por_projeto.setdefault(tarefa['Projeto'], set()).add(tarefa['Arquivo'])
+
+    repetidos = {nome for nome, arquivos in arquivos_por_projeto.items() if len(arquivos) > 1}
+    for tarefa in tarefas:
+        if tarefa['Projeto'] in repetidos:
+            tarefa['Projeto'] = f"{tarefa['Projeto']} [{Path(tarefa['Arquivo']).stem}]"
+    return tarefas
 
 def gerar_relatorios(diretorios_raiz=CAMINHOS_ENTRADA, diretorio_saida=PASTA_SAIDA):
     if isinstance(diretorios_raiz, (str, os.PathLike)):
@@ -331,6 +354,7 @@ def gerar_relatorios(diretorios_raiz=CAMINHOS_ENTRADA, diretorio_saida=PASTA_SAI
         arquivos_origem, tarefas_origem = processar_xmls_recursivos(diretorio_raiz)
         arquivo_infos.extend(arquivos_origem)
         tarefas_consolidadas.extend(tarefas_origem)
+    desambiguar_nomes_de_projeto(tarefas_consolidadas)
     if arquivo_infos:
         try:
             caminho_arquivo_detalhes = diretorio_saida / "arquivos_xml.csv"

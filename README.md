@@ -1,4 +1,4 @@
-# TCC - 
+# TCC
 Sistema de ETL para Gestão de Projetos com automação e integração entre diversas ferramentas (ProjectLibre, Streamlit, gerenciamento de pastas) 
 ### Definições
 
@@ -11,10 +11,10 @@ Sistema de ETL para Gestão de Projetos com automação e integração entre div
 
 2. **Definição dos Requisitos Funcionais**  
 • Ser capaz de percorrer as diversas pastas que separam os projetos.  
-• Identificar quais tiveram modificações desde a ultima vez que rodou.  
-• Identificar automaticamente status do projeto de acordo com qual pasta ele se encontra.  
+• Identificar quais tiveram modificações desde a ultima vez que rodou. *(futuro)*  
+• Identificar automaticamente status do projeto de acordo com qual pasta ele se encontra. *(futuro)*  
 • Extrair o conteudo de dentro dos .xml's/.pod's.  
-• Comparar com a ultima versão para analisar o que teve de alteração.  
+• Comparar com a ultima versão para analisar o que teve de alteração. *(futuro)*  
 • Gerar um arquivo com essas alterações tratadas. (CSV)  
 • Exibir as informações do Banco em um BI dinamico.
 
@@ -27,10 +27,10 @@ Sistema de ETL para Gestão de Projetos com automação e integração entre div
 
 ### Códigos e Documentação
 1. **Script de Extração**  
-• **[Código]** Desenvolver a função que monitora a pasta de arquivos de projeto.  
+• **[Código]** Desenvolver a função que monitora a pasta de arquivos de projeto. *(varredura recursiva implementada; monitoramento contínuo é futuro)*  
 • **[Código]** Desenvolver geração de dados sinteticos para testes  
-• **[Código]** Criar um módulo de validação (Script que verifica se algum dado de projeto ficou de fora da automação).  
-• **[Código]** Criar um módulo de excessões de erros.  
+• **[Código]** Criar um módulo de validação (Script que verifica se algum dado de projeto ficou de fora da automação). *(futuro)*  
+• **[Código]** Criar um módulo de excessões de erros. *(parcial: registro em log e tratamento por arquivo)*  
 • **[Código]** Criar o Módulo de extração dos dados.  
 
 2. **Script de Transformação**  
@@ -116,20 +116,45 @@ python .\src\main.py
 
 O comando atualiza `data/processed/arquivos_xml.csv` e `data/processed/consolidado_projetos.csv`. A lista mestre gerada junto aos cronogramas é um arquivo separado e não é sobrescrita pela extração.
 
-Calcule os indicadores BSC previsto e realizado:
+Calcule os indicadores BSC previsto e realizado e consolide ICPP, IPP e IAP:
 
 ```powershell
 python .\src\bsc\bsc_previsto.py calculate
 python .\src\bsc\bsc_realizado.py calculate
+python .\src\bsc\bsc_cons.py calculate
 ```
 
-Os dois comandos usam `data/processed/consolidado_projetos.csv` como entrada e gravam os resultados em `data/processed`. O BSC realizado usa os percentuais extraídos dos cronogramas. Se quiser fornecer uma planilha com percentuais realizados, instale também `openpyxl` (`python -m pip install openpyxl`) e informe-a com `--input-excel "caminho\para\arquivo.xlsx"`.
+Para executar extração e as três etapas BSC de uma só vez:
+
+```powershell
+python .\src\main.py --completo
+```
+
+Os comandos usam `data/processed/consolidado_projetos.csv` como entrada e gravam os resultados em `data/processed`. O BSC realizado usa os percentuais extraídos dos cronogramas. Se quiser fornecer uma planilha com percentuais realizados, instale também `openpyxl` (`python -m pip install openpyxl`) e informe-a com `--input-excel \"caminho\\para\\arquivo.xlsx\"` (a planilha afeta apenas o BSC realizado; ICPP, IPP e IAP usam os percentuais do cronograma).
 
 Por exemplo:
 
 ```powershell
-python .\src\bsc\bsc_realizado.py calculate --input-excel "caminho\para\arquivo.xlsx"
+python .\src\bsc\bsc_realizado.py calculate --input-excel \"caminho\\para\\arquivo.xlsx\"
 ```
+
+#### Indicadores ICPP, IPP e IAP (`bsc_cons.py`)
+
+| Arquivo gerado | Conteúdo |
+|---|---|
+| `indicador_icpp.csv` | ICPP por projeto e mês (realizado acumulado / previsto acumulado) e ∆AV |
+| `indicador_atividades_mensal.csv` | Atividades previstas x realizadas por projeto e mês |
+| `indicador_ipp.csv` | IPP por mês: projetos conformes / projetos ativos x 100 |
+| `indicador_iap.csv` | IAP por setor e mês: atividades concluídas / previstas x 100 |
+
+Regras adotadas (constantes no topo de `bsc_cons.py`):
+
+1. Atividade prevista no mês *m*: o **término** cai em *m* e já venceu em relação à data de referência do projeto.
+2. Atividade realizada: atividade prevista com 100% de conclusão (o cronograma é uma fotografia; não há data real de conclusão).
+3. Data de referência: `--data-referencia AAAA-MM-DD` (comum a todos) ou, se omitida, inferida por projeto (último término concluído ou último início em andamento). Meses posteriores não são avaliados. O mês da data de referência é marcado como parcial (`MesParcial`) no ICPP, e o dashboard usa o último mês completo como situação atual.
+4. IAP considera setores internos; ficam de fora "Cliente", atividades sem recurso e a linha-resumo do projeto. Uma atividade com mais de um setor conta para cada um.
+
+Para executar os testes das regras: `python -m unittest discover -s tests -v`.
 
 ### Dashboard Streamlit
 
@@ -139,4 +164,4 @@ Com os CSVs atualizados, inicie o dashboard a partir da raiz do repositório:
 python -m streamlit run .\src\dashboard\app.py
 ```
 
-O menu lateral contém telas para a lista mestre/visão geral, gráficos, cronogramas, atividades mensais e comparação BSC. Para atualizar os dados exibidos após uma nova geração, execute novamente `python .\src\main.py` e os comandos BSC antes de reiniciar ou atualizar o dashboard.
+O menu lateral contém telas para a lista mestre/visão geral, gráficos, cronogramas, atividades mensais, comparação BSC e indicadores (ICPP, IPP e IAP). Para atualizar os dados exibidos após uma nova geração, execute `python .\src\main.py --completo` antes de reiniciar ou atualizar o dashboard.

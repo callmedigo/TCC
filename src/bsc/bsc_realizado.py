@@ -194,12 +194,10 @@ def build_monthly_actual(excel_df=None, csv_df=None):
                 task_month = next_month
         
         total_pct = 0
-        for idx, label in enumerate(month_labels):
+        for label in month_labels:
             month_value = month_weights[label]
             month_pct_raw = month_value / total_weight * 100
             month_pct = int(math.floor(month_pct_raw + 0.5))
-            if idx == len(month_labels) - 1:
-                month_pct = max(0, 100 - total_pct)
             total_pct += month_pct
             records.append(
                 {
