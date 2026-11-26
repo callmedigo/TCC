@@ -1,0 +1,126 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="5klBONsZNAoeBOR3luVQ">
+    <mxGraphModel dx="311" dy="-488" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="rorGjpGf91t2q4q_Umja-40" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Entradas" vertex="1">
+          <mxGeometry height="130" width="590" x="880" y="1180" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-49" edge="1" parent="rorGjpGf91t2q4q_Umja-40" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" target="rorGjpGf91t2q4q_Umja-43">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="80" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-61" edge="1" parent="rorGjpGf91t2q4q_Umja-40" source="rorGjpGf91t2q4q_Umja-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="rorGjpGf91t2q4q_Umja-59">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-62" connectable="0" parent="rorGjpGf91t2q4q_Umja-61" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="Modelo Base" vertex="1">
+          <mxGeometry relative="1" x="-0.225" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-53" parent="rorGjpGf91t2q4q_Umja-40" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="data/raw&lt;div&gt;Cronogramas modelo&lt;/div&gt;&lt;div&gt;.xml e .pod&lt;/div&gt;" vertex="1">
+          <mxGeometry height="55.24" width="120" x="30" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-63" edge="1" parent="rorGjpGf91t2q4q_Umja-40" source="rorGjpGf91t2q4q_Umja-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="rorGjpGf91t2q4q_Umja-60">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-59" parent="rorGjpGf91t2q4q_Umja-40" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="synthetic_generator.py&lt;div&gt;gera os cronogramas sintéticos&lt;/div&gt;" vertex="1">
+          <mxGeometry height="55.24" width="120" x="270" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-60" parent="rorGjpGf91t2q4q_Umja-40" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="synthetic_generator.py&lt;div&gt;gera os cronogramas sintéticos&lt;/div&gt;" vertex="1">
+          <mxGeometry height="55.24" width="120" x="430" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-64" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="main.py -- completo - etapas 1 - 2 - 3 - grava os CSVs em data/processed" vertex="1">
+          <mxGeometry height="234.76" width="590" x="880" y="1330" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-65" edge="1" parent="rorGjpGf91t2q4q_Umja-64" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="80" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-66" edge="1" parent="rorGjpGf91t2q4q_Umja-64" source="rorGjpGf91t2q4q_Umja-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="rorGjpGf91t2q4q_Umja-70">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-67" connectable="0" parent="rorGjpGf91t2q4q_Umja-66" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="consolidado_projetos.csv" vertex="1">
+          <mxGeometry relative="1" x="-0.225" y="-1" as="geometry">
+            <mxPoint x="14" y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-74" edge="1" parent="rorGjpGf91t2q4q_Umja-64" source="rorGjpGf91t2q4q_Umja-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="rorGjpGf91t2q4q_Umja-76">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160.91666666666697" y="202.27" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-75" connectable="0" parent="rorGjpGf91t2q4q_Umja-74" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="consolidado_projetos.csv&lt;div&gt;arquivos_xml.csv&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.3859" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-68" parent="rorGjpGf91t2q4q_Umja-64" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="extracao.py&lt;div&gt;varredura recursiva&lt;/div&gt;&lt;div&gt;isola o XML do .pod e converte duração em dias úteis&lt;/div&gt;" vertex="1">
+          <mxGeometry height="77.51" width="240" x="10" y="44.760000000000005" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-77" edge="1" parent="rorGjpGf91t2q4q_Umja-64" source="rorGjpGf91t2q4q_Umja-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="rorGjpGf91t2q4q_Umja-78">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520.5" y="167.03" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-79" connectable="0" parent="rorGjpGf91t2q4q_Umja-77" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="indicador_bsc_realizado.csv" vertex="1">
+          <mxGeometry relative="1" x="-0.3486" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-70" parent="rorGjpGf91t2q4q_Umja-64" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="bsc_realizado.py&lt;div&gt;% concluído ponderado pela duração&lt;/div&gt;" vertex="1">
+          <mxGeometry height="55.24" width="160" x="420" y="55.900000000000006" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-80" edge="1" parent="rorGjpGf91t2q4q_Umja-64" source="rorGjpGf91t2q4q_Umja-76" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="rorGjpGf91t2q4q_Umja-78">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-84" connectable="0" parent="rorGjpGf91t2q4q_Umja-80" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="indicador_bsc_mensal.csv" vertex="1">
+          <mxGeometry relative="1" x="-0.0959" y="4" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-76" parent="rorGjpGf91t2q4q_Umja-64" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="bsc_previsto.py&lt;div&gt;rateio por sobreposição de dias úteis&lt;/div&gt;" vertex="1">
+          <mxGeometry height="35.24" width="240" x="10" y="177.03" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-78" parent="rorGjpGf91t2q4q_Umja-64" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="bsc_cons.py&lt;div&gt;data de referência - atividades vencidas&lt;/div&gt;&lt;div&gt;calcula ICPP, IPP e IAP&lt;/div&gt;" vertex="1">
+          <mxGeometry height="55.24" width="152" x="424" y="167.03" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-81" edge="1" parent="rorGjpGf91t2q4q_Umja-64" source="rorGjpGf91t2q4q_Umja-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;innerLoopWaypoints=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="rorGjpGf91t2q4q_Umja-78">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-73" edge="1" parent="1" source="rorGjpGf91t2q4q_Umja-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="rorGjpGf91t2q4q_Umja-68">
+          <mxGeometry relative="1" x="-0.0064" as="geometry">
+            <Array as="points">
+              <mxPoint x="1370" y="1320" />
+              <mxPoint x="960" y="1320" />
+              <mxPoint x="960" y="1360" />
+              <mxPoint x="1010" y="1360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-89" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="Dashboard" vertex="1">
+          <mxGeometry height="120" width="590" x="880" y="1590" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-90" edge="1" parent="rorGjpGf91t2q4q_Umja-89" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="80" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-86" parent="rorGjpGf91t2q4q_Umja-89" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Dashboard (Streamlit + Altair)&lt;div&gt;Lê os CSVs de data/processed&lt;/div&gt;" vertex="1">
+          <mxGeometry height="35.24" width="186" x="40" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-87" edge="1" parent="1" source="rorGjpGf91t2q4q_Umja-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="rorGjpGf91t2q4q_Umja-86">
+          <mxGeometry relative="1" x="0.2584" as="geometry" />
+        </mxCell>
+        <mxCell id="rorGjpGf91t2q4q_Umja-88" connectable="0" parent="rorGjpGf91t2q4q_Umja-87" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="indicador_icpp.csv&lt;div&gt;indicador_ipp.csv&lt;/div&gt;&lt;div&gt;indicador_iap.csv&lt;/div&gt;&lt;div&gt;indicador_atividades_mensal&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.1095" as="geometry">
+            <mxPoint x="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
