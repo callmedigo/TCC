@@ -57,15 +57,11 @@ def show() -> None:
     )
 
     total_projetos = len(df_filtrado)
-    
-    condicao_ativos = df_filtrado["Status"].str.contains("estudo|execução|andamento", case=False, na=False)
+    condicao_ativos = df_filtrado["Status"].str.contains("estudo|execução|andamento|atrasado", case=False, na=False)
     projetos_ativos = len(df_filtrado[condicao_ativos])
-    
     atrasados = len(df_filtrado[(condicao_ativos) & (df_filtrado["Condição_Prazo"] == "Atrasado")])
     no_prazo = projetos_ativos - atrasados
-    
     stand_by_susp = len(df_filtrado[df_filtrado["Status"].str.contains("stand|susp", case=False, na=False)])
-    
     perc_em_dia = int((no_prazo / projetos_ativos) * 100) if projetos_ativos > 0 else 0
 
     m1, m2, m3, m4, m5, m6 = st.columns(6)

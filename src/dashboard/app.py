@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import glob
 from datetime import datetime
-from views import bsc, visao_geral, cronograma, proximas_atividades, graficos, indicadores
+from views import bsc, visao_geral, cronograma, proximas_atividades, graficos
 
 st.set_page_config(
     page_title="Dashboard de Projetos",
@@ -54,11 +54,6 @@ with st.sidebar:
               use_container_width=True, 
               on_click=navegar_para, args=("BSC",))
 
-    st.button("Indicadores",
-              type="primary" if st.session_state.pagina_atual == "Indicadores" else "secondary",
-              use_container_width=True,
-              on_click=navegar_para, args=("Indicadores",))
-
 if st.session_state.pagina_atual == "Lista Mestre":
     visao_geral.show()
 elif st.session_state.pagina_atual == "Gráficos":
@@ -69,5 +64,3 @@ elif st.session_state.pagina_atual == "Atividades Mensais":
     proximas_atividades.show()
 elif st.session_state.pagina_atual == "BSC":
     bsc.show()
-elif st.session_state.pagina_atual == "Indicadores":
-    indicadores.show()

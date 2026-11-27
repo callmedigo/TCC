@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from src.dashboard.data import build_timeline, load_dashboard_data
+from src.dashboard.data import build_project_overview, build_timeline, load_dashboard_data
 st.set_page_config(layout="wide")
 
 def show() -> None:
@@ -25,16 +25,20 @@ def show() -> None:
         if df_row is None or coluna not in df_row or pd.isna(df_row[coluna]):
             return default
         value = df_row[coluna]
-        if coluna == "Abertura Briefing":
+        if coluna == "Abertura Briefing" or isinstance(value, pd.Timestamp):
             return pd.to_datetime(value).strftime("%d/%m/%Y")
         return str(value)
+
+    overview = build_project_overview(projects)
+    resumo = overview[overview["Projeto"] == selected_project]
+    resumo = resumo.iloc[0] if not resumo.empty else None
 
     c1, c2, c3, c4, c5, c6 = st.columns(6)
     c1.metric("Código", get_info("Código", projeto_info))
     c2.metric("Mercado", get_info("Mercado", projeto_info))
     c3.metric("Marca", get_info("Marca", projeto_info))
     c4.metric("Responsável", get_info("Responsável", projeto_info))
-    c5.metric("Status", get_info("Situação", projeto_info))
+    c5.metric("Status", get_info("Status", resumo))
     c6.metric("Categoria de Projeto", get_info("Categoria", projeto_info))
 
     st.write("")
@@ -43,8 +47,8 @@ def show() -> None:
     c8.metric("Conclusão Briefing", get_info("Conclusão Briefing", projeto_info))
     c9.metric("Prazo Original", get_info("Prazo Original", projeto_info))
     c10.metric("Desvio em dias", get_info("Desvio", projeto_info, "0"))
-    c11.metric("Conclusão Prevista", get_info("Termino", projeto_info))
-    c12.metric("% Progresso", f"{get_info('Progresso (%)', projeto_info, '0')}%")
+    c11.metric("Conclusão Prevista", get_info("Término", resumo))
+    c12.metric("% Progresso", f"{get_info('Progresso (%)', resumo, '0')}%")
 
     st.divider()
 

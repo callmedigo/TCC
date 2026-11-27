@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 from src.dashboard.data import build_upcoming_activities, load_dashboard_data
+
 st.set_page_config(layout="wide")
 
 def colorir_datas(coluna):
@@ -22,7 +23,7 @@ def colorir_datas(coluna):
             else:
                 cores.append('')
         except:
-            cores.append('') 
+            cores.append('')    
     return cores
 
 def show() -> None:

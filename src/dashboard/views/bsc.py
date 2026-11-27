@@ -1,6 +1,7 @@
 import altair as alt
 import streamlit as st
-from src.dashboard.data import build_bsc_comparison, load_dashboard_data
+from src.dashboard.data import build_bsc_comparison, load_dashboard_data, load_indicator_data
+from src.dashboard.views import indicadores
 
 MONTHLY_FIELDS = ["Planejado mensal (%)", "Realizado mensal (%)"]
 CUMULATIVE_FIELDS = ["Planejado acumulado (%)", "Realizado acumulado (%)"]
@@ -61,10 +62,10 @@ def _build_project_chart(comparison):
         title="Percentual mensal (colunas) e acumulado (linhas)",
     )
 
-def show() -> None:
-    st.title("Indicadores BSC")
+def _previsto_realizado() -> None:
+    st.subheader("Previsto × realizado por projeto")
     st.caption(
-        "Colunas comparam o percentual mensal planejado e realizado; "
+        "Base do ICPP: colunas comparam o percentual mensal planejado e realizado; "
         "linhas mostram os percentuais acumulados."
     )
 
@@ -114,6 +115,36 @@ def show() -> None:
             _build_project_chart(project_comparison),
             width="stretch",
         )
+
+def show() -> None:
+    st.title("BSC: ICPP, IPP e IAP")
+    try:
+        icpp, ipp, iap = load_indicator_data()
+    except (FileNotFoundError, ValueError) as error:
+        st.error(
+            f"Não foi possível carregar os indicadores: {error}. "
+            "Execute `python src/main.py --completo` para gerá-los."
+        )
+        st.stop()
+
+    tab_icpp, tab_ipp, tab_iap = st.tabs(["ICPP por projeto", "IPP do portfólio", "IAP por setor"])
+    with tab_icpp:
+        if icpp.empty:
+            st.info("Sem dados de ICPP.")
+        else:
+            indicadores.icpp_tab(icpp)
+        st.divider()
+        _previsto_realizado()
+    with tab_ipp:
+        if ipp.empty:
+            st.info("Sem dados de IPP.")
+        else:
+            indicadores.ipp_tab(ipp)
+    with tab_iap:
+        if iap.empty:
+            st.info("Sem dados de IAP.")
+        else:
+            indicadores.iap_tab(iap)
 
 if __name__ == "__main__":
     show()

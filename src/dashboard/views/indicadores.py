@@ -3,12 +3,14 @@ import pandas as pd
 import streamlit as st
 from src.dashboard.data import load_indicator_data
 
-def _situacao(valor) -> str:
+def _situacao(valor, parcial=False) -> str:
     if pd.isna(valor):
         return "Sem dado"
+    if parcial:
+        return "Sem mês completo"
     return "Em dia" if valor >= 1 else "Atrasado"
 
-def _icpp_tab(icpp: pd.DataFrame) -> None:
+def icpp_tab(icpp: pd.DataFrame) -> None:
     st.caption(
         "ICPP = realizado acumulado / previsto acumulado. Valores a partir de 1,0 indicam projeto em dia "
         "ou adiantado; abaixo de 1,0, atraso físico. O último mês de cada projeto é parcial quando a "
@@ -20,11 +22,13 @@ def _icpp_tab(icpp: pd.DataFrame) -> None:
     complete = ordered.loc[~ordered["MesParcial"]].groupby("Projeto").tail(1)
     only_partial = ordered.loc[~ordered["Projeto"].isin(complete["Projeto"])].groupby("Projeto").tail(1)
     latest = pd.concat([complete, only_partial], ignore_index=True)
-    latest = latest.assign(Situação=latest["ICPP"].map(_situacao))
+    latest = latest.assign(
+        Situação=[_situacao(v, p) for v, p in zip(latest["ICPP"], latest["MesParcial"])]
+    )
+    latest = latest.sort_values(["MesParcial", "ICPP"])
     st.dataframe(
         latest[["Projeto", "Month", "DataReferencia", "PrevistoAcumulado", "RealizadoAcumulado", "ICPP", "Situação", "MesParcial"]]
-        .rename(columns={"Month": "Mês", "DataReferencia": "Data de referência", "MesParcial": "Mês parcial"})
-        .sort_values("ICPP"),
+        .rename(columns={"Month": "Mês", "DataReferencia": "Data de referência", "MesParcial": "Mês parcial"}),
         hide_index=True,
         use_container_width=True,
     )
@@ -48,7 +52,7 @@ def _icpp_tab(icpp: pd.DataFrame) -> None:
     target = alt.Chart(pd.DataFrame({"y": [1.0]})).mark_rule(strokeDash=[6, 4], color="#ef4444").encode(y="y:Q")
     st.altair_chart((line + target).properties(height=380), width="stretch")
 
-def _ipp_tab(ipp: pd.DataFrame) -> None:
+def ipp_tab(ipp: pd.DataFrame) -> None:
     st.caption(
         "IPP = projetos que concluíram todas as atividades previstas no mês / projetos ativos no mês x 100. "
         "Um projeto fica fora do grupo conforme se uma única atividade vencida estiver incompleta."
@@ -71,7 +75,7 @@ def _ipp_tab(ipp: pd.DataFrame) -> None:
         use_container_width=True,
     )
 
-def _iap_tab(iap: pd.DataFrame) -> None:
+def iap_tab(iap: pd.DataFrame) -> None:
     st.caption(
         "IAP = atividades do setor concluídas no mês / atividades do setor previstas no mês x 100. "
         "Consideram-se apenas setores internos (sem Cliente e sem atividades sem recurso)."
@@ -110,9 +114,9 @@ def show() -> None:
 
     tab_icpp, tab_ipp, tab_iap = st.tabs(["ICPP por projeto", "IPP do portfólio", "IAP por setor"])
     for tab, dados, desenhar, nome in (
-        (tab_icpp, icpp, _icpp_tab, "ICPP"),
-        (tab_ipp, ipp, _ipp_tab, "IPP"),
-        (tab_iap, iap, _iap_tab, "IAP"),
+        (tab_icpp, icpp, icpp_tab, "ICPP"),
+        (tab_ipp, ipp, ipp_tab, "IPP"),
+        (tab_iap, iap, iap_tab, "IAP"),
     ):
         with tab:
             if dados.empty:

@@ -65,9 +65,9 @@ def show() -> None:
     if sel_ano != "Todos": df_filtrado = df_filtrado[df_filtrado["Ano"] == sel_ano]
 
     qtd_em_estudo = len(df_filtrado[df_filtrado["Status"].str.contains("estudo", case=False, na=False)])
-    qtd_em_execucao = len(df_filtrado[df_filtrado["Status"].str.contains("execução|andamento", case=False, na=False)])
+    qtd_em_execucao = len(df_filtrado[df_filtrado["Status"].str.contains("execução|andamento|atrasado", case=False, na=False)])
     qtd_atrasados = len(df_filtrado[df_filtrado["Status"].str.contains("atrasado", case=False, na=False)])
-    qtd_no_prazo = len(df_filtrado) - qtd_atrasados
+    qtd_no_prazo = qtd_em_execucao - qtd_atrasados
     
     desvios = pd.to_numeric(df_filtrado["Desvio"], errors='coerce').dropna()
     media_desvio = int(desvios.mean()) if not desvios.empty else 0
